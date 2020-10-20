@@ -30,6 +30,7 @@ import Splash from './Screen/Splash/Splash';
 import { Provider, useDispatch } from 'react-redux';
 import store from './redux/store';
 import Register from './Screen/Account/Register/Register';
+import Player from './Screen/Player/Player';
 
 
 const Stack = createStackNavigator();
@@ -41,8 +42,9 @@ const App: () => React$Node = () => {
 			<StatusBar barStyle="dark-content" />
 			<View style={styles.appContainer} >
 				<NavigationContainer>
-					<Stack.Navigator headerMode="none" initialRouteName='Splash' >
+					<Stack.Navigator headerMode="none" initialRouteName='Player' >
 						<Stack.Screen name="Account" component={Account} />
+						<Stack.Screen name="Player" component={Player} />
 						<Stack.Screen name="Register" component={Register} />
 						<Stack.Screen name="Splash" component={Splash} />
 					</Stack.Navigator>
