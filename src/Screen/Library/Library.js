@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import Header from '../Components/Header/Header';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import SongList from './SongList/SongList';
-import NewList from './NewList/NewList';
 import BookList from './BookList/BookList';
+import ListPlaylist from './Playlist/ListPlaylist';
+import News from './News/News';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -24,27 +24,27 @@ class Library extends Component {
 						activeTintColor: 'white',
 						labelStyle: {
 							color: 'black',
-							fontWeight: 'bold'
+							fontWeight: 'bold',
 						},
 						showLabel: true,
 						style: {
 							backgroundColor: 'rgba(0,0,0,0)',
 						},
 						indicatorStyle: {
-							backgroundColor: '#636363'
+							backgroundColor: '#636363',
 						}
 					}}>
 					<Tab.Screen
 						options={{
-							tabBarLabel: 'Bài hát',
+							tabBarLabel: 'PLaylist',
 						}}
-						name="SongList" component={SongList}
+						name="ListPlaylist" component={ListPlaylist}
 					/>
 					<Tab.Screen
 						options={{
 							tabBarLabel: 'Tin tức',
 						}}
-						name="NewList" component={NewList}
+						name="News" component={News}
 					/>
 					<Tab.Screen
 						options={{
