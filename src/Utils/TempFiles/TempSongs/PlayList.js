@@ -2,17 +2,17 @@ import songList from './SongList'
 
 const playList = [{
 	idList: '1',
-	playListName: 'queens',
+	playlistName: 'queens',
 	songList: songList
 },
 {
 	idList: '2',
-	playListName: 'gunNRose',
+	playlistName: 'gunNRose',
 	songList: songList
 },
 {
 	idList: '3',
-	playListName: 'Metalica',
+	playlistName: 'Metalica',
 	songList: songList
 }]
 

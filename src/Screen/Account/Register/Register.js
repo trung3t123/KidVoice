@@ -96,6 +96,7 @@ class Register extends Component {
 									<CustomIcon iconType='Entypo' name="key" size={30} color='#ffffff' />
 									<TextInput
 										value={this.state.userPassword}
+										secureTextEntry={true}
 										placeholder='Password'
 										onChangeText={(value) => { this.setState({ userPassword: value }) }}
 										style={{ color: 'white', paddingLeft: 10, width: SCREEN_WIDTH * 80 / 100 }} />
@@ -104,6 +105,7 @@ class Register extends Component {
 									<CustomIcon iconType='Entypo' name="key" size={30} color='#ffffff' />
 									<TextInput
 										value={this.state.rePassword}
+										secureTextEntry={true}
 										placeholder='Re-Password'
 										onChangeText={(value) => { this.setState({ rePassword: value }) }}
 										style={{ color: 'white', paddingLeft: 10, width: SCREEN_WIDTH * 80 / 100 }} />

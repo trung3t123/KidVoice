@@ -1,14 +1,14 @@
 import Axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
-const localhost = 'http://103.102.46.103'
+const URL = 'http://192.168.0.122'
 
 export const logoutUser = () => {
 	console.log('helo, logged out');
 	return function (dispatch) {
 		AsyncStorage.getItem('token').then((token) => {
 			console.log('token', token);
-			return Axios.post(localhost + ':5035/api/users/logout', '', {
+			return Axios.post(URL + ':5035/api/users/logout', '', {
 				headers: {
 					'Content-Type': 'application/json',
 					Accept: 'application/json',
@@ -44,7 +44,7 @@ export const loginFacebook = () => {
 					console.log("Login cancelled");
 				} else {
 					AccessToken.getCurrentAccessToken().then(data => {
-						Axios.post(localhost + ':5035/api/users/loginFacebook',
+						Axios.post(URL + ':5035/api/users/loginFacebook',
 							{
 								userToken: data.accessToken,
 								userID: data.userID
@@ -69,7 +69,7 @@ export const loginFacebook = () => {
 
 export const loginUser = (userMail, passwordUser) => {
 	return function (dispatch) {
-		return Axios.post(localhost + ":5035/api/user/postLogin",
+		return Axios.post(URL + ":5035/api/user/postLogin",
 			{
 				userMail: userMail,
 				userPassword: passwordUser
@@ -94,7 +94,7 @@ export const loginUser = (userMail, passwordUser) => {
 
 export const register = (user) => {
 	return function (dispatch) {
-		return Axios.post(localhost + ':5035/api/user/',
+		return Axios.post(URL + ':5035/api/user/',
 			{
 				userName: user.userName,
 				userPassword: user.userPassword,
@@ -116,7 +116,7 @@ export const register = (user) => {
 export const getUserData = () => {
 	return function (dispatch) {
 		AsyncStorage.getItem('token').then((token) => {
-			return Axios.get(localhost + ':5035/api/users/me', {
+			return Axios.get(URL + ':5035/api/users/me', {
 				headers: {
 					'Content-Type': 'application/json',
 					Accept: 'application/json',

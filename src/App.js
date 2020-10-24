@@ -5,32 +5,21 @@
  * @format
  * @flow strict-local
  */
-import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import {
-	SafeAreaView,
-	StyleSheet,
-	ScrollView,
-	View,
-	Text,
-	StatusBar,
-} from 'react-native';
+	StatusBar, StyleSheet,
 
-import {
-	Header,
-	LearnMoreLinks,
-	Colors,
-	DebugInstructions,
-	ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-import Account from './Screen/Account/Account';
-import Splash from './Screen/Splash/Splash';
-import { Provider, useDispatch } from 'react-redux';
+	View
+} from 'react-native';
+import 'react-native-gesture-handler';
+import { Provider } from 'react-redux';
 import store from './redux/store';
+import Authorize from './Authorize';
 import Register from './Screen/Account/Register/Register';
-import PlayerScreen from './Screen/Player/PlayerScreen';
+import Login from './Screen/Account/Login/Login';
+
 
 
 const Stack = createStackNavigator();
@@ -42,11 +31,10 @@ const App: () => React$Node = () => {
 			<StatusBar barStyle="dark-content" />
 			<View style={styles.appContainer} >
 				<NavigationContainer>
-					<Stack.Navigator headerMode="none" initialRouteName='Splash' >
-						<Stack.Screen name="Account" component={Account} />
-						<Stack.Screen name="Player" component={PlayerScreen} />
+					<Stack.Navigator headerMode="none" initialRouteName='Authorize' >
+						<Stack.Screen name="Authorize" component={Authorize} />
+						<Stack.Screen name="Login" component={Login} />
 						<Stack.Screen name="Register" component={Register} />
-						<Stack.Screen name="Splash" component={Splash} />
 					</Stack.Navigator>
 				</NavigationContainer>
 			</View>

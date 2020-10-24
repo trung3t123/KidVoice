@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-import Login from './Login/Login';
+import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
+import { logoutUser } from '../../redux/actions/User';
 
 class Account extends Component {
 	constructor(props) {
@@ -11,11 +12,34 @@ class Account extends Component {
 
 	render() {
 		return (
-			<View style={{flex: 1}} >
-				<Login navigation={this.props.navigation} />
+			<View style={{ flex: 1 }}>
+				<SafeAreaView>
+					<View>
+						<Text>Upload Product</Text>
+						<View>
+							
+						</View>
+					</View>
+					<Text> Logged in </Text>
+					<TouchableOpacity onPress={() => this.props.logout()} style={{backgroundColor: 'red', height: 60, width: 100 }} >
+						<Text>Logout</Text>
+					</TouchableOpacity>
+				</SafeAreaView>
 			</View>
 		);
 	}
 }
 
-export default Account;
+function mapStateToProps(state) {
+	return {
+		user: state.user
+	}
+}
+
+function mapDispatchToProps(dispatch) {
+	return {
+		logout: () => dispatch(logoutUser())
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Account);

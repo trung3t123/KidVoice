@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Image, Dimensions, TextInput, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Image, Dimensions, TextInput, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import CustomIcon from '../../../Utils/CustomIcon';
 import IMAGE from '../../../Utils/ImageConst';
@@ -71,8 +71,13 @@ class Login extends Component {
 		};
 	}
 
-	login = () => {
-		this.props.login();
+
+	loginUser = () => {
+		const { userMail, userPassword } = this.state;
+
+		console.log('userMail: ' + userMail);
+		console.log('userPassword: ' + userPassword);
+		this.props.login(userMail, userPassword);
 	}
 
 
@@ -82,12 +87,9 @@ class Login extends Component {
 
 	render() {
 		return (
-			<View style={{ flex: 1 }}>
+			<KeyboardAvoidingView style={{ flex: 1 }}>
 				<LinearGradient start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} colors={['#171717', '#404958', '#6597ea']} style={styles.linearGradient}>
 					<SafeAreaView style={{ flex: 1 }}>
-						<TouchableOpacity style={{ marginLeft: 10 }} onPress={() => this.props.navigation.goBack()}>
-							<CustomIcon iconType='AntDesign' name='left' size={30} color='#9d9d9d' />
-						</TouchableOpacity>
 						<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
 							<View style={styles.loginFormContainer}>
 								<View style={styles.iconContainer}>
@@ -101,7 +103,7 @@ class Login extends Component {
 											onChangeText={(value) => this.setState({ userMail: value })}
 											placeholder='Email'
 											placeholderTextColor='#9d9d9d'
-											style={{ paddingLeft: 10, backgroundColor: 'transparent', height: deviceHeight * 10 / 100, width: deviceWidth * 80 / 100 }} />
+											style={{ color: 'white',paddingLeft: 10, backgroundColor: 'transparent', height: deviceHeight * 10 / 100, width: deviceWidth * 80 / 100 }} />
 									</View>
 									<View style={styles.inputText}>
 										<CustomIcon iconType='MaterialCommunityIcons' name="lock-outline" size={30} color='#9d9d9d' />
@@ -111,7 +113,7 @@ class Login extends Component {
 											placeholder='Password'
 											secureTextEntry={true}
 											placeholderTextColor='#9d9d9d'
-											style={{ paddingLeft: 10, backgroundColor: 'transparent', height: deviceHeight * 10 / 100, width: deviceWidth * 80 / 100 }} />
+											style={{ color: 'white',paddingLeft: 10, backgroundColor: 'transparent', height: deviceHeight * 10 / 100, width: deviceWidth * 80 / 100 }} />
 									</View>
 									<View style={styles.loginState}>
 										<TouchableOpacity onPress={this.facebookLoginHandler} style={styles.facebookLoginButton} >
@@ -142,7 +144,7 @@ class Login extends Component {
 						</TouchableWithoutFeedback>
 					</SafeAreaView>
 				</LinearGradient>
-			</View>
+			</KeyboardAvoidingView>
 		);
 	}
 }

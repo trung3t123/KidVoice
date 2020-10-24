@@ -6,6 +6,7 @@ import BookList from './BookList/BookList';
 import ListPlaylist from './Playlist/ListPlaylist';
 import News from './News/News';
 
+
 const Tab = createMaterialTopTabNavigator();
 
 class Library extends Component {
@@ -58,5 +59,6 @@ class Library extends Component {
 		);
 	}
 }
+
 
 export default Library;
