@@ -1,26 +1,22 @@
-import playList from "../../Utils/TempFiles/TempSongs/playList";
 
 const initialState = {
 	playlist: [],
-	modalVisible : false,
-}
+  modalVisible : false,
+  }
 
 const playlistReducers = (state = initialState, action) => {
 	switch (action.type) {
 		case 'CREATE_PLAYLIST': {
-			let newPlaylist = state.playlist
-			newPlaylist.push({
-				_id : Math.random(),
-				playlistName: action.playlistName
-			})
 			return {
 				...state,
-				playlist: newPlaylist,
 				modalVisible : false,
 			}
 		}
-		case 'LOAD_PLAYLIST': {
-			return state;
+		case 'LOAD_PLAYLIST_SUCCESS': {
+      return {
+        ...state,
+        playlist:  action.playlist
+      }
 		}
 		case 'SET_MODAL_VISIBLE' : {
 			return {

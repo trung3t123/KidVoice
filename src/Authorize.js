@@ -7,6 +7,7 @@ import PlayerScreen from './Screen/Player/PlayerScreen';
 import Register from './Screen/Account/Register/Register';
 import Login from './Screen/Account/Login/Login';
 import { connect } from 'react-redux';
+import { getUserData } from './redux/actions/User';
 
 
 const Stack = createStackNavigator();
@@ -17,7 +18,11 @@ class Authorize extends Component {
 		super(props);
 		this.state = {
 		};
-	}
+  }
+  
+  componentDidMount = () => {
+    this.props.getUserData()
+  }
 
 	render() {
 		if (!this.props.user.loggedInStatus) {
@@ -44,4 +49,10 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps, null)(Authorize);
+function mapDispatchToProps(dispatch) {
+  return {
+    getUserData : () => dispatch(getUserData())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Authorize);

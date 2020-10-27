@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">kidVoice</string>
+    <string name="facebook_app_id">676986306565949</string>
+    <string name="fb_login_protocol_scheme">fb676986306565949</string>
 </resources>

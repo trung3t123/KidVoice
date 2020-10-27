@@ -88,14 +88,16 @@ class Register extends Component {
 									<MaterialIcons name="alternate-email" size={30} color='#ffffff' />
 									<TextInput
 										value={this.state.userMail}
-										placeholder='Email'
+                    placeholder='Email'
+                    placeholderTextColor='#ffffff'
 										onChangeText={(value) => { this.setState({ userMail: value }) }}
 										style={{ color: 'white', paddingLeft: 10, width: SCREEN_WIDTH * 80 / 100 }} />
 								</View>
 								<View style={styles.textInput}>
 									<CustomIcon iconType='Entypo' name="key" size={30} color='#ffffff' />
 									<TextInput
-										value={this.state.userPassword}
+                    value={this.state.userPassword}
+                    placeholderTextColor='#ffffff'
 										secureTextEntry={true}
 										placeholder='Password'
 										onChangeText={(value) => { this.setState({ userPassword: value }) }}
@@ -104,6 +106,7 @@ class Register extends Component {
 								<View style={styles.textInput}>
 									<CustomIcon iconType='Entypo' name="key" size={30} color='#ffffff' />
 									<TextInput
+                  placeholderTextColor='#ffffff'
 										value={this.state.rePassword}
 										secureTextEntry={true}
 										placeholder='Re-Password'
@@ -113,6 +116,7 @@ class Register extends Component {
 								<View style={styles.textInput}>
 									<AntDesign name="user" size={30} color='#ffffff' />
 									<TextInput
+                  placeholderTextColor='#ffffff'
 										value={this.state.userName}
 										placeholder='User Name'
 										onChangeText={(value) => { this.setState({ userName: value }) }}

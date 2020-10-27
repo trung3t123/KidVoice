@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
-const URL = 'http://192.168.0.122'
+const URL = 'http://192.168.0.107'
 
 export const logoutUser = () => {
 	console.log('helo, logged out');
@@ -131,3 +131,5 @@ export const getUserData = () => {
 		})
 	}
 }
+
+

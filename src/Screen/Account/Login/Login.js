@@ -87,7 +87,7 @@ class Login extends Component {
 
 	render() {
 		return (
-			<KeyboardAvoidingView style={{ flex: 1 }}>
+			<View style={{ flex: 1 }}>
 				<LinearGradient start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} colors={['#171717', '#404958', '#6597ea']} style={styles.linearGradient}>
 					<SafeAreaView style={{ flex: 1 }}>
 						<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -144,7 +144,7 @@ class Login extends Component {
 						</TouchableWithoutFeedback>
 					</SafeAreaView>
 				</LinearGradient>
-			</KeyboardAvoidingView>
+			</View>
 		);
 	}
 }
