@@ -10,34 +10,34 @@ const deviceHeight = Dimensions.get('screen').height;
 const deviceWidth = Dimensions.get('screen').width;
 
 const styles = StyleSheet.create({
-	contentContainer: {
-		flex: 1,
+  contentContainer: {
+    flex: 1,
 
-	}
+  }
 })
 
 class HomeScreen extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-		};
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+    };
+  }
 
-	render() {
-		return (
-			<View style={{ flex: 1, }} >
-				<Header navigation={this.props.navigation} headerText='Trang Chủ' />
-				<View style={styles.contentContainer}>
-					<ScrollView style={styles.content}>
-						<HighLights />
-						<Books />
-						<News />
-					</ScrollView>
-				</View>
+  render() {
+    return (
+      <View style={{ flex: 1, paddingBottom: deviceHeight * 9 / 100 }} >
+        <Header navigation={this.props.navigation} headerText='Trang Chủ' />
+        <View style={styles.contentContainer}>
+          <ScrollView style={styles.content}>
+            <HighLights />
+            <Books />
+            <News />
+          </ScrollView>
+        </View>
 
-			</View>
-		);
-	}
+      </View>
+    );
+  }
 }
 
 export default HomeScreen;

@@ -67,22 +67,20 @@ const PLaylistDetails = (props) => {
     trackList.forEach(track => {
       playlistReady.push({
         id: track._id,
-        url: 'http://192.168.0.107:5035/tracks/openTrack/' + track._id,
+        url: 'http://192.168.0.117:5035/tracks/openTrack/' + track._id,
         title: track.title,
         artist: track.artist
       })
     })
-    TrackPlayer.setupPlayer().then(async () => {
-      console.log('setted up');
-      console.log('playlist', playlistReady);
-      await TrackPlayer.add(playlistReady).then(() => {
-        TrackPlayer.play();
-      }).catch(
-        error => {
-          console.log('error play', error);
-        }
-      )
-    });
+    await TrackPlayer.reset();
+    await TrackPlayer.add(playlistReady).then(() => {
+      TrackPlayer.play();
+    }).catch(
+      error => {
+        console.log('error play', error);
+      }
+    )
+
   }
 
   useEffect(() => {

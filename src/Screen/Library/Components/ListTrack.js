@@ -57,19 +57,18 @@ const styles = StyleSheet.create({
 })
 function Trackplay(props) {
   async function playAll(trackId, trackName, artist) {
-    TrackPlayer.setupPlayer().then(async () => {
-      await TrackPlayer.add({
-        id: trackId,
-        url: 'http://192.168.0.107:5035/tracks/openTrack/' + trackId,
-        title: trackName,
-        artist: artist,
-        // album: 'while(1<2)',
-        // genre: 'Progressive House, Electro House',
-        // date: '2014-05-20T07:00:00+00:00', // RFC 3339
-      }).then(() => {
-        TrackPlayer.play();
-      })
-    });
+    await TrackPlayer.reset();
+    await TrackPlayer.add({
+      id: trackId,
+      url: 'http://192.168.0.117:5035/tracks/openTrack/' + trackId,
+      title: trackName,
+      artist: artist,
+      // album: 'while(1<2)',
+      // genre: 'Progressive House, Electro House',
+      // date: '2014-05-20T07:00:00+00:00', // RFC 3339
+    }).then(() => {
+      TrackPlayer.play();
+    })
   }
   return (
     <View style={styles.trackStyle}>

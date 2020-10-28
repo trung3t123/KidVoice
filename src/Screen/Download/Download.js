@@ -10,7 +10,8 @@ class Download extends Component {
 
 	render() {
 		return (
-			<View>
+      <View style={{ flex: 1, paddingBottom: deviceHeight * 9 / 100 }} >
+
 				<Text> Download </Text>
 			</View>
 		);

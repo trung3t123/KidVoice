@@ -4,6 +4,7 @@ import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import TrackPlayer from 'react-native-track-player';
+import { connect } from 'react-redux';
 import CustomIcon from '../../Utils/CustomIcon';
 import Download from '../Download/Download';
 import HomeScreen from '../HomeScreen/HomeScreen';
@@ -35,7 +36,8 @@ const styles = StyleSheet.create({
   playListContent: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent :'center'
   },
 })
 
@@ -44,22 +46,60 @@ class Splash extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      trackName : '',
+      title: 'Bạn Chưa chọn track nào hihi',
+      artist: 'chọn track bất kì đi nhé',
+      playing: false
     };
   }
 
-  async playSong() {
-    console.log('log');
+  componentDidMount = () => {
+    TrackPlayer.setupPlayer().then(() => {
+      console.log('MP setted up');
+    })
+    TrackPlayer.updateOptions({
+      stopWithApp: true,
+      capabilities: [
+        TrackPlayer.CAPABILITY_PLAY,
+        TrackPlayer.CAPABILITY_PAUSE,
+        TrackPlayer.STATE_PLAYING,
+        TrackPlayer.CAPABILITY_JUMP_FORWARD,
+        TrackPlayer.CAPABILITY_JUMP_BACKWARD,
+        TrackPlayer.CAPABILITY_PLAY_FROM_ID,
+      ],
+    });
+    TrackPlayer.addEventListener('playback-track-changed', async (data) => {
+      let trackId = await TrackPlayer.getCurrentTrack();
+      TrackPlayer.getTrack(trackId).then(data => {
+        this.setState({
+          title: data.title,
+          artist: data.artist,
+          playing: true
+        })
+      })
+    })
+  }
+
+  previousTrack = async () => {
+    TrackPlayer.skipToPrevious();
+  }
+
+  nextTrack = async () => {
+    TrackPlayer.skipToNext();
+  }
+
+  playTrack = async () => {
     TrackPlayer.play();
+    this.setState({ playing: true })
   }
 
 
-  async pauseSong() {
+  pauseTrack = async () => {
     TrackPlayer.pause();
+    this.setState({ playing: false })
   }
 
 
-   render() {
+  render() {
     return (
       <SafeAreaView style={{ flex: 1 }} >
         <Tab.Navigator
@@ -142,16 +182,29 @@ class Splash extends Component {
             <TouchableOpacity style={styles.playListContent} >
               <CustomIcon iconType='Entypo' name='folder-music' size={30} color='#ffffff' />
               <View style={{ flexDirection: 'column' }}>
-                <Text style={{ fontSize: 15, fontWeight: '400', marginLeft: 10, color: "#ffffff" }}>name song</Text>
-                <Text style={{ fontSize: 10, marginLeft: 10, color: "#ffffff" }}>artist</Text>
+                <Text style={{ fontSize: 15, fontWeight: '400', marginLeft: 10, color: "#ffffff" }}>{this.state.title}</Text>
+                <Text style={{ fontSize: 10, marginLeft: 10, color: "#ffffff" }}>{this.state.artist}</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this.playSong}>
-              <CustomIcon iconType='Entypo' name='controller-play' size={30} color='#ffffff' />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={this.pauseSong}>
-              <CustomIcon iconType='AntDesign' name='pause' size={30} color='#ffffff' />
-            </TouchableOpacity>
+            <View style={{ flexDirection: 'row', position: 'absolute', right: 10, justifyContent: 'center', alignItems: 'center' }}>
+              <TouchableOpacity onPress={this.previousTrack}>
+                <CustomIcon iconType='AntDesign' name='stepbackward' size={25} color='#ffffff' />
+              </TouchableOpacity>
+              {(this.state.playing) ?
+                (
+                  <TouchableOpacity onPress={this.pauseTrack}>
+                    <CustomIcon iconType='AntDesign' name='pause' size={30} color='#ffffff' />
+                  </TouchableOpacity>
+                ) :
+                (
+                  <TouchableOpacity onPress={this.playTrack}>
+                    <CustomIcon iconType='Entypo' name='controller-play' size={30} color='#ffffff' />
+                  </TouchableOpacity>
+                )}
+              <TouchableOpacity onPress={this.nextTrack}>
+                <CustomIcon iconType='AntDesign' name='stepforward' size={25} color='#ffffff' />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </SafeAreaView>
