@@ -16,6 +16,9 @@ target 'kidVoice' do
 
   pod 'RNFS', :path => '../node_modules/react-native-fs'
 
+
+  pod 'react-native-simple-toast', :path => '../node_modules/react-native-simple-toast'
+
   target 'kidVoiceTests' do
     inherit! :complete
     # Pods for testing

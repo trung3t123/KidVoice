@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import React, {Component} from 'react';
+import {View, Text} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
@@ -16,58 +16,118 @@ import Octicons from 'react-native-vector-icons/Octicons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Zocial from 'react-native-vector-icons/Zocial';
 
-
-
-
 class CustomIcon extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-		};
-	}
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
-	render() {
-
-		switch (this.props.iconType) {
-			case 'AntDesign': {
-				return <AntDesign name={this.props.name} size={this.props.size} color={this.props.color} />
-			}
-			case 'EvilIcons': {
-				return <EvilIcons name={this.props.name} size={this.props.size} color={this.props.color} />
-			}
-			case 'Entypo': {
-				return <Entypo name={this.props.name} size={this.props.size} color={this.props.color} />
-			}
-			case 'FontAwesome': {
-				return <FontAwesome name={this.props.name} size={this.props.size} color={this.props.color} />
-			}
-			case 'FontAwesome5': {
-				return <FontAwesome5 name={this.props.name} size={this.props.size} color={this.props.color} />
-			}
-			case 'Ionicons': {
-				return <Ionicons name={this.props.name} size={this.props.size} color={this.props.color} />
-			}
-			case 'MaterialCommunityIcons': {
-				return <MaterialCommunityIcons name={this.props.name} size={this.props.size} color={this.props.color} />
-			}
-			case 'MaterialIcons': {
-				return <MaterialIcons name={this.props.name} size={this.props.size} color={this.props.color} />
-			}
-			case 'Octicons': {
-				return <Octicons name={this.props.name} size={this.props.size} color={this.props.color} />
-			}
-			case 'SimpleLineIcons': {
-				return <SimpleLineIcons name={this.props.name} size={this.props.size} color={this.props.color} />
-			}
-			case 'Zocial': {
-				return <Zocial name={this.props.name} size={this.props.size} color={this.props.color} />
-			}
-			default: {
-				return null
-			}
-		}
-
-	}
+  render() {
+    switch (this.props.iconType) {
+      case 'AntDesign': {
+        return (
+          <AntDesign
+            name={this.props.name}
+            size={this.props.size}
+            color={this.props.color}
+          />
+        );
+      }
+      case 'EvilIcons': {
+        return (
+          <EvilIcons
+            name={this.props.name}
+            size={this.props.size}
+            color={this.props.color}
+          />
+        );
+      }
+      case 'Entypo': {
+        return (
+          <Entypo
+            name={this.props.name}
+            size={this.props.size}
+            color={this.props.color}
+          />
+        );
+      }
+      case 'FontAwesome': {
+        return (
+          <FontAwesome
+            name={this.props.name}
+            size={this.props.size}
+            color={this.props.color}
+          />
+        );
+      }
+      case 'FontAwesome5': {
+        return (
+          <FontAwesome5
+            name={this.props.name}
+            size={this.props.size}
+            color={this.props.color}
+          />
+        );
+      }
+      case 'Ionicons': {
+        return (
+          <Ionicons
+            name={this.props.name}
+            size={this.props.size}
+            color={this.props.color}
+          />
+        );
+      }
+      case 'MaterialCommunityIcons': {
+        return (
+          <MaterialCommunityIcons
+            name={this.props.name}
+            size={this.props.size}
+            color={this.props.color}
+          />
+        );
+      }
+      case 'MaterialIcons': {
+        return (
+          <MaterialIcons
+            name={this.props.name}
+            size={this.props.size}
+            color={this.props.color}
+          />
+        );
+      }
+      case 'Octicons': {
+        return (
+          <Octicons
+            name={this.props.name}
+            size={this.props.size}
+            color={this.props.color}
+          />
+        );
+      }
+      case 'SimpleLineIcons': {
+        return (
+          <SimpleLineIcons
+            name={this.props.name}
+            size={this.props.size}
+            color={this.props.color}
+          />
+        );
+      }
+      case 'Zocial': {
+        return (
+          <Zocial
+            name={this.props.name}
+            size={this.props.size}
+            color={this.props.color}
+          />
+        );
+      }
+      default: {
+        return null;
+      }
+    }
+  }
 }
 
 export default CustomIcon;

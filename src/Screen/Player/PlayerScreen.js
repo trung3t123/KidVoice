@@ -1,81 +1,89 @@
-import React, { useEffect } from 'react';
-import { Text, View, SafeAreaView, Button, Image } from 'react-native';
-import TrackPlayer from 'react-native-track-player';
+import React, {useEffect, useState, useLayoutEffect} from 'react';
+import {
+  Dimensions,
+  Image,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import TrackPlayer, {getTrack} from 'react-native-track-player';
+import CustomIcon from '../../Utils/CustomIcon';
+import IMAGE from '../../Utils/ImageConst';
+import Player from './Player';
 
-
-
-const PlayerScreen = (props) => {
-
-  // useEffect(() => {
-  //   TrackPlayer.setupPlayer().then(async () => {
-  //     console.log('ready player');
-  //     await TrackPlayer.add({
-  //       id: 'trackId',
-  //       url: 'http://192.168.0.107:5035/tracks/openTrack/5f96645a06741b12746ab03e',
-  //       title: 'Avaritia',
-  //       artist: 'deadmau5',
-  //       // album: 'while(1<2)',
-  //       // genre: 'Progressive House, Electro House',
-  //       // date: '2014-05-20T07:00:00+00:00', // RFC 3339
-  //     }).then(() => {
-  //       console.log('added Song');
-  //     })
-  //   });
-  // }, [])
-
-  async function getSong() {
-    let trackId = await TrackPlayer.getCurrentTrack();
-    let trackObject = await TrackPlayer.getTrack(trackId);
-    // Position, buffered position and duration return values in seconds
-    let position = await TrackPlayer.getPosition();
-    let buffered = await TrackPlayer.getBufferedPosition();
-    let duration = await TrackPlayer.getDuration();
-    console.log('track details', trackId, trackObject, position, buffered, duration);
-  }
-
-  async function playSong() {
-    TrackPlayer.play();
-  }
-
-
-  async function pauseSong() {
-    TrackPlayer.pause();
-  }
-
-  async function playAll() {
-    TrackPlayer.setupPlayer().then(async () => {
-      console.log('ready player');
-      await TrackPlayer.add({
-        id: 'trackId',
-        url: 'http://192.168.0.107:5035/tracks/openTrack/5f96645a06741b12746ab03e',
-        title: 'Avaritia',
-        artist: 'deadmau5',
-        // album: 'while(1<2)',
-        // genre: 'Progressive House, Electro House',
-        // date: '2014-05-20T07:00:00+00:00', // RFC 3339
-      }).then(() => {
-        TrackPlayer.play();
-      })
-    });
-  }
-
-
+const deviceHeight = Dimensions.get('screen').height;
+const deviceWidth = Dimensions.get('screen').width;
+const PlayerScreen = ({title, artist, duration, pauseTrack, playing, setPlayerVisible}) => {
   return (
-    <View style={{ flex: 1 }} >
-      <SafeAreaView style={{ flex: 1 }}>
-        <Text>componentName</Text>
-        <Button title="prepare and play song" onPress={playAll} >
-        </Button>
-        <Button title="get song" onPress={getSong} >
-        </Button>
-        <Button title="play song" onPress={playSong} >
-        </Button>
-        <Button title="pause song" onPress={pauseSong} >
-        </Button>
-        {/* <Image style={{ height: 200, width: 200, resizeMode: 'center' }} source={{uri : 'http://192.168.0.122:5035/'}} /> */}
-      </SafeAreaView>
-    </View>
-  )
+    <SafeAreaView style={{flex: 1}}>
+      <ScrollView
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          height: deviceHeight,
+          backgroundColor: 'grey',
+          width: '100%',
+          padding: 20,
+        }}>
+        <View
+          style={{
+            height: (deviceHeight * 5) / 100,
+            width: '100%',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <TouchableOpacity
+            style={{position: 'absolute', left: 0}}
+            onPress={() => setPlayerVisible()}>
+            <CustomIcon
+              iconType="AntDesign"
+              name="down"
+              size={17}
+              color="#ffffff"
+            />
+          </TouchableOpacity>
+          <Text style={{color: 'white'}}> Playlist Name</Text>
+        </View>
+        <View
+          style={{
+            height: (deviceHeight * 50) / 100,
+            width: '100%',
+            marginBottom: (deviceHeight * 2) / 100,
+          }}>
+          <Image
+            style={{
+              height: '100%',
+              width: '100%',
+              resizeMode: 'contain',
+            }}
+            source={IMAGE.bohemian_rhapsody}
+          />
+        </View>
+        <View style={{flexDirection: 'column', justifyContent: 'center'}}>
+          <Text style={{fontSize: 30, fontWeight: '500', color: 'white'}}>
+            {title}
+          </Text>
+          <Text style={{fontSize: 15, fontWeight: '400', color: 'white'}}>
+            {artist}
+          </Text>
+          <Text style={{fontSize: 15, fontWeight: '400', color: 'white'}}>
+            {duration}
+          </Text>
+        </View>
+        <View
+          style={{
+            flexDirection: 'column',
+            justifyContent: 'center',
+            height: (deviceHeight * 5) / 100,
+          }}>
+          <Player pauseTrack={pauseTrack} playing={playing} duration={duration} />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
 };
 
 export default PlayerScreen;
