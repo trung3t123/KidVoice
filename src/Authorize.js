@@ -8,6 +8,7 @@ import Register from './Screen/Account/Register/Register';
 import Login from './Screen/Account/Login/Login';
 import {connect} from 'react-redux';
 import {getUserData} from './redux/actions/User';
+import {cardStyleInterpolatorRoot, gestureConfig} from './config';
 
 const Stack = createStackNavigator();
 
@@ -27,7 +28,17 @@ class Authorize extends Component {
     } else
       return (
         <View style={{flex: 1}}>
-          <Stack.Navigator headerMode="none" initialRouteName="Splash">
+          <Stack.Navigator
+            initialRouteName="Splash"
+            mode="modal"
+            screenOptions={{
+              headerShown: false,
+              ...gestureConfig,
+              animationEnabled: true,
+              cardStyle: {backgroundColor: 'transparent'},
+              cardOverlayEnabled: true,
+              cardStyleInterpolator: cardStyleInterpolatorRoot,
+            }}>
             <Stack.Screen name="Account" component={Account} />
             <Stack.Screen name="Player" component={PlayerScreen} />
             <Stack.Screen name="Register" component={Register} />

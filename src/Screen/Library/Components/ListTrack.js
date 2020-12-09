@@ -1,10 +1,11 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import {
   View,
   Text,
   Dimensions,
   TouchableOpacity,
   StyleSheet,
+  Image,
 } from 'react-native';
 import {connect, useDispatch} from 'react-redux';
 import {
@@ -14,6 +15,7 @@ import {
 } from '../../../redux/actions/Track';
 import CustomIcon from '../../../Utils/CustomIcon';
 import TrackPlayer from 'react-native-track-player';
+import URL from '../../../Utils/constant/ConstURL';
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
@@ -27,15 +29,6 @@ const styles = StyleSheet.create({
     borderRadius: deviceWidth,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.37,
-    shadowRadius: 7.49,
-
-    elevation: 12,
   },
   addPlayListButton2: {
     marginTop: 10,
@@ -57,7 +50,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   trackImage: {
-    backgroundColor: '#636363',
     height: (deviceHeight * 7) / 100,
     width: (deviceHeight * 7) / 100,
     alignItems: 'center',
@@ -65,14 +57,18 @@ const styles = StyleSheet.create({
   },
 });
 function Trackplay(props) {
-  async function playAll(trackId, trackName, artist, duration) {
+  useEffect(() => {
+    console.log('[listTrack] imageTrack', props.trackImage);
+  }, []);
+  async function playAll(trackId, trackName, artist, duration, trackImage) {
     await TrackPlayer.reset();
     await TrackPlayer.add({
       id: trackId,
-      url: 'http://192.168.88.121:5035/tracks/openTrack/' + trackId,
+      url: URL.SERVER + ':5035/tracks/openTrack/' + trackId,
       title: trackName,
       artist: artist,
       duration: duration,
+      artwork: URL.SERVER + ':5035/tracks/getTrackImage/' + trackImage,
       // album: 'while(1<2)',
       // genre: 'Progressive House, Electro House',
       // date: '2014-05-20T07:00:00+00:00', // RFC 3339
@@ -84,11 +80,16 @@ function Trackplay(props) {
     <View style={styles.trackStyle}>
       <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}}>
         <View style={styles.trackImage}>
-          <CustomIcon
-            iconType="FontAwesome"
-            name="music"
-            size={25}
-            color="#ffffff"
+          <Image
+            style={{
+              resizeMode: 'contain',
+              height: (deviceHeight * 7) / 100,
+              width: (deviceHeight * 7) / 100,
+            }}
+            source={{
+              uri:
+                URL.SERVER + ':5035/tracks/getTrackImage/' + props.trackImage,
+            }}
           />
         </View>
         <View>
@@ -100,7 +101,13 @@ function Trackplay(props) {
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() =>
-          playAll(props.trackId, props.trackName, props.artist, props.duration)
+          playAll(
+            props.trackId,
+            props.trackName,
+            props.artist,
+            props.duration,
+            props.trackImage,
+          )
         }
         style={{position: 'absolute', right: 0}}>
         <CustomIcon
@@ -120,7 +127,7 @@ function Track(props) {
   const addTrack = (trackId, playlistId) =>
     dispatch(addTrackToPlaylist(trackId, playlistId));
 
-  renderAddTrack = () => {
+  const renderAddTrack = () => {
     if (addTrackStatus) {
       return (
         <TouchableOpacity
@@ -152,11 +159,16 @@ function Track(props) {
     <View style={styles.trackStyle}>
       <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}}>
         <View style={styles.trackImage}>
-          <CustomIcon
-            iconType="FontAwesome"
-            name="music"
-            size={25}
-            color="#ffffff"
+          <Image
+            style={{
+              resizeMode: 'contain',
+              height: (deviceHeight * 7) / 100,
+              width: (deviceHeight * 7) / 100,
+            }}
+            source={{
+              uri:
+                URL.SERVER + ':5035/tracks/getTrackImage/' + props.trackImage,
+            }}
           />
         </View>
         <View>
@@ -218,6 +230,7 @@ class ListTrack extends Component {
                     trackName={track.title}
                     artist={track.artist}
                     duration={track.duration}
+                    trackImage={track.trackImage}
                   />
                 );
               })}
@@ -246,6 +259,7 @@ class ListTrack extends Component {
                 trackName={track.title}
                 artist={track.artist}
                 duration={track.duration}
+                trackImage={track.trackImage}
               />
             );
           })}

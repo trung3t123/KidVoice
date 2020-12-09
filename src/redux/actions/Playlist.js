@@ -1,12 +1,12 @@
 import Axios from "axios"
 import Toast from 'react-native-simple-toast';
+import URL from "../../Utils/constant/ConstURL";
 
-const URL = 'http://192.168.88.121'
 
 
 export const createPlayList = (playlistName, userId) => {
   return function (dispatch) {
-    return Axios.post(URL + ':5035/tracks/createPlaylist', {
+    return Axios.post(URL.SERVER + ':5035/tracks/createPlaylist', {
       userId: userId,
       playlistName: playlistName
     }).then(
@@ -22,7 +22,7 @@ export const createPlayList = (playlistName, userId) => {
 export const getAllUserPlaylist = (userId) => {
   console.log('userId', userId);
   return function (dispatch) {
-    return Axios.post(URL + ':5035/tracks/getAllUserPlaylist', { userId: userId }).then(
+    return Axios.post(URL.SERVER + ':5035/tracks/getAllUserPlaylist', { userId: userId }).then(
       response => {
         console.log('playlist', response);
         dispatch({ type: 'LOAD_PLAYLIST_SUCCESS', playlist: response.data.playlist })

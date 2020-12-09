@@ -4,15 +4,14 @@ import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import TrackPlayer from 'react-native-track-player';
-import {connect} from 'react-redux';
 import CustomIcon from '../../Utils/CustomIcon';
 import Download from '../Download/Download';
 import HomeScreen from '../HomeScreen/HomeScreen';
 import Library from '../Library/Library';
 import News from '../News/News';
 import Search from '../Search/Search';
-import PlayerScreen from '../Player/PlayerScreen';
-import Modal from 'react-native-modal';
+import {connect} from 'react-redux';
+import {setPlaying} from '../../redux/actions/Track';
 
 const Tab = createMaterialBottomTabNavigator();
 const deviceHeight = Dimensions.get('screen').height;
@@ -49,7 +48,6 @@ class Splash extends Component {
       title: 'Bạn Chưa chọn track nào hihi',
       artist: 'chọn track bất kì đi nhé',
       duration: '',
-      playing: false,
       playerVisible: false,
     };
   }
@@ -80,6 +78,19 @@ class Splash extends Component {
         TrackPlayer.CAPABILITY_PLAY_FROM_ID,
       ],
     });
+    TrackPlayer.addEventListener('playback-state', async (data) => {
+      console.log('[somebody] data', data.state);
+      switch (data.state) {
+        case 3: {
+          return this.props.setPlayingTrue();
+        }
+        case 2: {
+          return this.props.setPlayingFalse();
+        }
+        default:
+          break;
+      }
+    });
     TrackPlayer.addEventListener('playback-track-changed', async (data) => {
       let trackId = await TrackPlayer.getCurrentTrack();
       TrackPlayer.getTrack(trackId).then((data) => {
@@ -87,7 +98,7 @@ class Splash extends Component {
           title: data.title,
           artist: data.artist,
           duration: data.duration,
-          playing: true,
+          artwork: data.artwork,
         });
       });
     });
@@ -107,34 +118,15 @@ class Splash extends Component {
 
   playTrack = async () => {
     TrackPlayer.play();
-    this.setState({playing: true});
   };
 
   pauseTrack = async () => {
     TrackPlayer.pause();
-    this.setState({playing: false});
-  };
-
-  setPlayerVisible = () => {
-    this.setState({playerVisible: false});
   };
 
   render() {
     return (
       <SafeAreaView style={{flex: 1}}>
-        <Modal
-          useNativeDriver={true}
-          isVisible={this.state.playerVisible}
-          style={{margin: 0}}>
-          <PlayerScreen
-            artist={this.state.artist}
-            title={this.state.title}
-            duration={this.state.duration}
-            pauseTrack={this.pauseTrack}
-            playing={this.state.playing}
-            setPlayerVisible={this.setPlayerVisible}
-          />
-        </Modal>
         <Tab.Navigator
           barStyle={{
             backgroundColor: '#636363',
@@ -263,7 +255,8 @@ class Splash extends Component {
           <View style={styles.playListContainer}>
             <TouchableOpacity
               onPress={() => {
-                this.setState({playerVisible: true});
+                // this.setState({playerVisible: true});
+                this.props.navigation.navigate('Player');
               }}
               style={styles.playListContent}>
               <CustomIcon
@@ -303,7 +296,7 @@ class Splash extends Component {
                   color="#ffffff"
                 />
               </TouchableOpacity>
-              {this.state.playing ? (
+              {this.props.playing ? (
                 <TouchableOpacity onPress={this.pauseTrack}>
                   <CustomIcon
                     iconType="AntDesign"
@@ -338,4 +331,17 @@ class Splash extends Component {
   }
 }
 
-export default Splash;
+function mapStateToProps(state) {
+  return {
+    playing: state.track.playing,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setPlayingTrue: () => dispatch({type: 'SET_PLAYING_TRUE'}),
+    setPlayingFalse: () => dispatch({type: 'SET_PLAYING_FALSE'}),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Splash);

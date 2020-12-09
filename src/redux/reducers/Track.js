@@ -1,33 +1,48 @@
 const initialState = {
   trackList: [],
-  suggestedTracks : [],
-  addTrackVisible : false,
-  playingTrack :[]
-}
+  suggestedTracks: [],
+  addTrackVisible: false,
+  playingTrack: [],
+  playing: false,
+};
 
- const trackReducers = (state = initialState, action) => {
-	switch (action.type) {
-    case 'LOAD_TRACKLIST_SUCCESS' : {
+const trackReducers = (state = initialState, action) => {
+  switch (action.type) {
+    case 'LOAD_TRACKLIST_SUCCESS': {
       return {
         ...state,
-        trackList : action.trackList
-      }
+        trackList: action.trackList,
+      };
     }
-    case 'ADD_SUGGEST_TRACKLIST' : {
+    case 'SET_PLAYING_TRUE': {
       return {
         ...state,
-        suggestedTracks : action.suggestedTracks
-      }
+        playing: true,
+      };
     }
-    case 'SET_ADDTRACK_VISIBLE' : {
+
+    case 'SET_PLAYING_FALSE': {
       return {
         ...state,
-        addTrackVisible : action.addTrackVisible
-      }
+        playing: false,
+      };
     }
-		default:
-			return state
-	}
-}
+
+    case 'ADD_SUGGEST_TRACKLIST': {
+      return {
+        ...state,
+        suggestedTracks: action.suggestedTracks,
+      };
+    }
+    case 'SET_ADDTRACK_VISIBLE': {
+      return {
+        ...state,
+        addTrackVisible: action.addTrackVisible,
+      };
+    }
+    default:
+      return state;
+  }
+};
 
 export default trackReducers;

@@ -12,18 +12,16 @@ class Account extends Component {
   render() {
     return (
       <View style={{flex: 1}}>
-        <SafeAreaView>
-          <View>
-            <Text>Upload Product</Text>
-            <View></View>
-          </View>
-          <Text> Logged in </Text>
-          <TouchableOpacity
-            onPress={() => this.props.logout()}
-            style={{backgroundColor: 'red', height: 60, width: 100}}>
-            <Text>Logout</Text>
-          </TouchableOpacity>
-        </SafeAreaView>
+        <View>
+          <Text>Upload Product</Text>
+          <View></View>
+        </View>
+        <Text> Logged in </Text>
+        <TouchableOpacity
+          onPress={() => this.props.logout()}
+          style={{backgroundColor: 'red', height: 60, width: 100}}>
+          <Text>Logout</Text>
+        </TouchableOpacity>
       </View>
     );
   }

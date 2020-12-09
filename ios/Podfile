@@ -19,6 +19,8 @@ target 'kidVoice' do
 
   pod 'react-native-simple-toast', :path => '../node_modules/react-native-simple-toast'
 
+  pod 'react-native-slider', :path => '../node_modules/@react-native-community/slider'
+
   target 'kidVoiceTests' do
     inherit! :complete
     # Pods for testing

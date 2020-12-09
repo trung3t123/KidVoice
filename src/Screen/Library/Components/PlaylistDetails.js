@@ -15,6 +15,7 @@ import ListTrack from './ListTrack';
 import Modal from 'react-native-modal';
 import AddTrackModal from './AddTrackModal';
 import TrackPlayer from 'react-native-track-player';
+import URL from '../../../Utils/constant/ConstURL';
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
@@ -26,15 +27,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(102, 102, 102,1)',
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 9,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 12.35,
-
-    elevation: 19,
   },
   playlistImageContainer: {
     alignSelf: 'center',
@@ -73,10 +65,11 @@ const PLaylistDetails = (props) => {
     trackList.forEach((track) => {
       playlistReady.push({
         id: track._id,
-        url: 'http://192.168.88.121:5035/tracks/openTrack/' + track._id,
+        url: URL.SERVER + ':5035/tracks/openTrack/' + track._id,
         title: track.title,
         artist: track.artist,
         duration: track.duration,
+        artwork: URL.SERVER + ':5035/tracks/getTrackImage/' + track.trackImage,
       });
     });
     await TrackPlayer.reset();

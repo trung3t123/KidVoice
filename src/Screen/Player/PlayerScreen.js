@@ -8,16 +8,43 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import TrackPlayer, {getTrack} from 'react-native-track-player';
 import CustomIcon from '../../Utils/CustomIcon';
 import IMAGE from '../../Utils/ImageConst';
 import Player from './Player';
+import TrackPlayer, {getCurrentTrack} from 'react-native-track-player';
 
 const deviceHeight = Dimensions.get('screen').height;
 const deviceWidth = Dimensions.get('screen').width;
-const PlayerScreen = ({title, artist, duration, pauseTrack, playing, setPlayerVisible}) => {
+
+const PlayerScreen = ({navigation}) => {
+  const [track, setTrack] = useState({
+    title: 'Bạn chưa chọn bài gì nhé',
+    artist: '',
+    duration: '',
+    artwork:
+      'https://i2.wp.com/www.wmhbradio.org/wp-content/uploads/2016/07/music-placeholder.png?ssl=1',
+  });
+
+  async function getCurrentTrack() {
+    let trackId = await TrackPlayer.getCurrentTrack();
+    TrackPlayer.getTrack(trackId).then((data) => {
+      setTrack({
+        title: data.title,
+        artist: data.artist,
+        duration: data.duration,
+        artwork: data.artwork,
+      });
+    });
+  }
+
+  useEffect(() => {
+    // TrackPlayer.addEventListener('playback-track-changed', async (data) => {
+    // });
+    getCurrentTrack();
+  }, [track]);
+
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, borderRadius: 10}}>
       <ScrollView
         style={{
           position: 'absolute',
@@ -37,7 +64,7 @@ const PlayerScreen = ({title, artist, duration, pauseTrack, playing, setPlayerVi
           }}>
           <TouchableOpacity
             style={{position: 'absolute', left: 0}}
-            onPress={() => setPlayerVisible()}>
+            onPress={() => navigation.goBack()}>
             <CustomIcon
               iconType="AntDesign"
               name="down"
@@ -59,27 +86,26 @@ const PlayerScreen = ({title, artist, duration, pauseTrack, playing, setPlayerVi
               width: '100%',
               resizeMode: 'contain',
             }}
-            source={IMAGE.bohemian_rhapsody}
+            source={{uri: track.artwork}}
           />
         </View>
         <View style={{flexDirection: 'column', justifyContent: 'center'}}>
           <Text style={{fontSize: 30, fontWeight: '500', color: 'white'}}>
-            {title}
+            {track.title}
           </Text>
           <Text style={{fontSize: 15, fontWeight: '400', color: 'white'}}>
-            {artist}
+            {track.artist}
           </Text>
-          <Text style={{fontSize: 15, fontWeight: '400', color: 'white'}}>
-            {duration}
-          </Text>
+          {/* <Text style={{fontSize: 15, fontWeight: '400', color: 'white'}}>
+            {track.duration}
+          </Text> */}
         </View>
         <View
           style={{
-            flexDirection: 'column',
             justifyContent: 'center',
-            height: (deviceHeight * 5) / 100,
+            height: (deviceHeight * 15) / 100,
           }}>
-          <Player pauseTrack={pauseTrack} playing={playing} duration={duration} />
+          <Player />
         </View>
       </ScrollView>
     </SafeAreaView>

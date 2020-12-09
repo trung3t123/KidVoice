@@ -2,15 +2,16 @@ import Axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import {LoginManager, AccessToken} from 'react-native-fbsdk';
 import Toast from 'react-native-simple-toast';
+import URL from '../../Utils/constant/ConstURL';
 
-const URL = 'http://192.168.88.121';
+
 
 export const logoutUser = () => {
   console.log('helo, logged out');
   return function (dispatch) {
     AsyncStorage.getItem('token').then((token) => {
       console.log('token', token);
-      return Axios.post(URL + ':5035/api/users/logout', '', {
+      return Axios.post(URL.SERVER + ':5035/api/users/logout', '', {
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
@@ -49,7 +50,7 @@ export const loginFacebook = () => {
 
           AccessToken.getCurrentAccessToken()
             .then((data) => {
-              Axios.post(URL + ':5035/api/users/loginFacebook', {
+              Axios.post(URL.SERVER + ':5035/api/users/loginFacebook', {
                 userToken: data.accessToken,
                 userID: data.userID,
               })
@@ -80,7 +81,7 @@ export const loginFacebook = () => {
 export const loginUser = (userMail, passwordUser) => {
   return function (dispatch) {
     dispatch({type: 'LOADING_START'});
-    return Axios.post(URL + ':5035/api/user/postLogin', {
+    return Axios.post(URL.SERVER + ':5035/api/user/postLogin', {
       userMail: userMail,
       userPassword: passwordUser,
     })
@@ -104,7 +105,7 @@ export const loginUser = (userMail, passwordUser) => {
 export const register = (user) => {
   return function (dispatch) {
     dispatch({type: 'LOADING_START'});
-    return Axios.post(URL + ':5035/api/user/', {
+    return Axios.post(URL.SERVER + ':5035/api/user/', {
       userName: user.userName,
       userPassword: user.userPassword,
       userMail: user.userMail,
@@ -130,7 +131,7 @@ export const register = (user) => {
 export const getUserData = () => {
   return function (dispatch) {
     AsyncStorage.getItem('token').then((token) => {
-      return Axios.get(URL + ':5035/api/users/me', {
+      return Axios.get(URL.SERVER + ':5035/api/users/me', {
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
