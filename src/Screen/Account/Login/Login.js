@@ -181,9 +181,7 @@ class Login extends Component {
                     </TouchableOpacity>
                     <View style={{flexDirection: 'row'}}>
                       <TouchableOpacity onPress={this.onClick}>
-                        <Text style={{color: 'white', paddingTop: 5}}>
-                          Forgot password
-                        </Text>
+                        <Text style={{paddingTop: 5}}>Forgot password</Text>
                       </TouchableOpacity>
                       <TouchableOpacity
                         onPress={() =>
@@ -192,7 +190,6 @@ class Login extends Component {
                         <Text
                           style={{
                             marginLeft: 10,
-                            color: 'white',
                             paddingTop: 5,
                           }}>
                           Register

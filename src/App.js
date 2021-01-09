@@ -24,13 +24,12 @@ const App: () => React$Node = () => {
   return (
     <Provider store={store}>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={styles.appContainer}>
-        <NavigationContainer>
-          <Stack.Navigator headerMode="none" initialRouteName="Authorize">
-            <Stack.Screen name="Authorize" component={Authorize} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </SafeAreaView>
+      <NavigationContainer>
+        <Stack.Navigator headerMode="none" initialRouteName="Authorize">
+          <Stack.Screen name="Authorize" component={Authorize} />
+          <Stack.Screen name="Register" component={Register} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </Provider>
   );
 };

@@ -16,8 +16,6 @@ export const loadSuggestTracks = () => {
   };
 };
 
-
-
 export const loadTracklist = (playlistId) => {
   return function (dispatch) {
     return Axios.post(URL.SERVER + ':5035/tracks/getPlaylist', {
