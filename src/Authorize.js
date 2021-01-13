@@ -25,27 +25,26 @@ class Authorize extends Component {
   render() {
     if (!this.props.user.loggedInStatus) {
       return <Login navigation={this.props.navigation} />;
-    } else
+    } else {
       return (
-        <View style={{flex: 1}}>
-          <Stack.Navigator
-            initialRouteName="Splash"
-            mode="modal"
-            screenOptions={{
-              headerShown: false,
-              ...gestureConfig,
-              animationEnabled: true,
-              cardStyle: {backgroundColor: 'transparent'},
-              cardOverlayEnabled: true,
-              cardStyleInterpolator: cardStyleInterpolatorRoot,
-            }}>
-            <Stack.Screen name="Account" component={Account} />
-            <Stack.Screen name="Player" component={PlayerScreen} />
-            <Stack.Screen name="Register" component={Register} />
-            <Stack.Screen name="Splash" component={Splash} />
-          </Stack.Navigator>
-        </View>
+        <Stack.Navigator
+          initialRouteName="Splash"
+          mode="modal"
+          screenOptions={{
+            headerShown: false,
+            ...gestureConfig,
+            animationEnabled: true,
+            cardStyle: {backgroundColor: 'transparent'},
+            cardOverlayEnabled: true,
+            cardStyleInterpolator: cardStyleInterpolatorRoot,
+          }}>
+          <Stack.Screen name="Account" component={Account} />
+          <Stack.Screen name="Player" component={PlayerScreen} />
+          <Stack.Screen name="Register" component={Register} />
+          <Stack.Screen name="Splash" component={Splash} />
+        </Stack.Navigator>
       );
+    }
   }
 }
 

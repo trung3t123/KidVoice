@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     height: (deviceHeight * 7) / 100,
     width: deviceWidth,
     alignItems: 'center',
-    paddingLeft: 20,
+    paddingHorizontal: 20,
   },
   headerText: {
     fontSize: 25,

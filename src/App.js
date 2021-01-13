@@ -8,27 +8,34 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import {StatusBar, StyleSheet, View, SafeAreaView} from 'react-native';
+import {StatusBar, StyleSheet, SafeAreaView} from 'react-native';
+import codePush from 'react-native-code-push';
 import 'react-native-gesture-handler';
 import {Provider} from 'react-redux';
-import store from './redux/store';
 import Authorize from './Authorize';
+import store from './redux/store';
 import Register from './Screen/Account/Register/Register';
-import Login from './Screen/Account/Login/Login';
-import PlayerScreen from './Screen/Player/PlayerScreen';
-import Modal from 'react-native-modal';
 
 const Stack = createStackNavigator();
 
+let codePushOptions = {checkFrequency: codePush.CheckFrequency.MANUAL};
+
 const App: () => React$Node = () => {
+  codePush.sync({
+    updateDialog: true,
+    installMode: codePush.InstallMode.IMMEDIATE,
+  });
+
   return (
     <Provider store={store}>
       <StatusBar barStyle="dark-content" />
       <NavigationContainer>
-        <Stack.Navigator headerMode="none" initialRouteName="Authorize">
-          <Stack.Screen name="Authorize" component={Authorize} />
-          <Stack.Screen name="Register" component={Register} />
-        </Stack.Navigator>
+        <SafeAreaView style={{flex: 1}}>
+          <Stack.Navigator headerMode="none" initialRouteName="Authorize">
+            <Stack.Screen name="Authorize" component={Authorize} />
+            <Stack.Screen name="Register" component={Register} />
+          </Stack.Navigator>
+        </SafeAreaView>
       </NavigationContainer>
     </Provider>
   );
@@ -40,4 +47,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default codePush(codePushOptions)(App);
