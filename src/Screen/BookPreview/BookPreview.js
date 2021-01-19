@@ -29,11 +29,10 @@ class BookPreview extends Component {
     const bookId = route?.params?.item?._id;
     const source = {
       uri: URL.SERVER + ':5035/books/openBook/' + bookId,
-      cache: true,
+      cache: false,
     };
     return (
-      <View style={styles.container}>
-
+      <View style={styles.screenContainer}>
         <Pdf
           source={source}
           onLoadComplete={(numberOfPages, filePath) => {

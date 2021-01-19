@@ -3,7 +3,8 @@ PODS:
   - boost-for-react-native (1.63.0)
   - BVLinearGradient (2.5.6):
     - React
-  - CocoaAsyncSocket (7.6.4)
+  - CardIODynamic (5.4.1)
+  - CocoaAsyncSocket (7.6.5)
   - CocoaLibEvent (1.0.0)
   - CodePush (7.0.0):
     - Base64 (~> 1.1)
@@ -11,6 +12,8 @@ PODS:
     - React-Core
     - SSZipArchive (~> 2.2.2)
   - DoubleConversion (1.1.6)
+  - EditableTextInsetsTextFieldV2 (0.0.2):
+    - TapAdditionsKitV2
   - FBLazyVector (0.63.4)
   - FBReactNativeSpec (0.63.4):
     - Folly (= 2020.01.13.00)
@@ -89,8 +92,28 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
+  - goSellSDK (2.2.41):
+    - goSellSDK/Core (= 2.2.41)
+  - goSellSDK/Core (2.2.41):
+    - CardIODynamic
+    - EditableTextInsetsTextFieldV2
+    - SwiftyRSA
+    - TapAdditionsKitV2
+    - TapApplicationV2
+    - TapBundleLocalization
+    - TapCardValidator
+    - TapEditableViewV2
+    - TapFontsKitV2
+    - TapGLKitV2
+    - TapKeychain
+    - TapNetworkManagerV2
+    - TapNibViewV2
+    - TapResponderChainInputViewV2
+    - TapSearchViewV2
+    - TapVisualEffectViewV2
   - JWT (3.0.0-beta.12):
     - Base64 (~> 1.1.2)
+  - Kingfisher (6.0.1)
   - OpenSSL-Universal (1.0.2.20):
     - OpenSSL-Universal/Static (= 1.0.2.20)
   - OpenSSL-Universal/Static (1.0.2.20)
@@ -359,6 +382,9 @@ PODS:
     - React
   - RNGestureHandler (1.8.0):
     - React
+  - RNGosellSdkReactNative (1.0.0):
+    - goSellSDK (= 2.2.41)
+    - React
   - RNReanimated (1.13.1):
     - React
   - RNScreens (2.11.0):
@@ -366,6 +392,43 @@ PODS:
   - RNVectorIcons (7.1.0):
     - React
   - SSZipArchive (2.2.3)
+  - SwiftyRSA (1.6.0):
+    - SwiftyRSA/ObjC (= 1.6.0)
+  - SwiftyRSA/ObjC (1.6.0)
+  - TapAdditionsKitV2 (0.0.8):
+    - TapSwiftFixesV2
+  - TapApplicationV2 (0.0.2):
+    - TapAdditionsKitV2
+  - TapBundleLocalization (1.0.3)
+  - TapCardValidator (1.2.6)
+  - TapEditableViewV2 (0.0.2):
+    - TapAdditionsKitV2
+  - TapFontsKitV2 (0.0.3):
+    - TapAdditionsKitV2
+  - TapGLKitV2 (0.0.2):
+    - TapAdditionsKitV2
+  - TapKeychain (1.0.5)
+  - TapNetworkManagerV2 (0.0.3):
+    - Kingfisher
+    - TapAdditionsKitV2
+  - TapNibViewV2 (0.0.2):
+    - TapAdditionsKitV2
+  - TapResponderChainInputViewV2 (0.0.3):
+    - TapAdditionsKitV2
+    - TapNibViewV2
+  - TapSearchViewV2 (0.0.3):
+    - TapAdditionsKitV2
+    - TapNibViewV2
+  - TapSwiftFixesV2 (1.0.0):
+    - TapSwiftFixesV2/CoreGraphics (= 1.0.0)
+    - TapSwiftFixesV2/Exceptions (= 1.0.0)
+    - TapSwiftFixesV2/Threading (= 1.0.0)
+  - TapSwiftFixesV2/CoreGraphics (1.0.0)
+  - TapSwiftFixesV2/Exceptions (1.0.0)
+  - TapSwiftFixesV2/Threading (1.0.0)
+  - TapVisualEffectViewV2 (0.0.2):
+    - TapAdditionsKitV2
+    - TapNibViewV2
   - Toast (4.0.0)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -433,6 +496,7 @@ DEPENDENCIES:
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - "RNGosellSdkReactNative (from `../node_modules/@tap-payments/gosell-sdk-react-native/ios`)"
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
@@ -442,8 +506,10 @@ SPEC REPOS:
   trunk:
     - Base64
     - boost-for-react-native
+    - CardIODynamic
     - CocoaAsyncSocket
     - CocoaLibEvent
+    - EditableTextInsetsTextFieldV2
     - FBSDKCoreKit
     - FBSDKLoginKit
     - FBSDKShareKit
@@ -454,9 +520,26 @@ SPEC REPOS:
     - Flipper-PeerTalk
     - Flipper-RSocket
     - FlipperKit
+    - goSellSDK
     - JWT
+    - Kingfisher
     - OpenSSL-Universal
     - SSZipArchive
+    - SwiftyRSA
+    - TapAdditionsKitV2
+    - TapApplicationV2
+    - TapBundleLocalization
+    - TapCardValidator
+    - TapEditableViewV2
+    - TapFontsKitV2
+    - TapGLKitV2
+    - TapKeychain
+    - TapNetworkManagerV2
+    - TapNibViewV2
+    - TapResponderChainInputViewV2
+    - TapSearchViewV2
+    - TapSwiftFixesV2
+    - TapVisualEffectViewV2
     - Toast
     - YogaKit
 
@@ -541,6 +624,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-fs"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNGosellSdkReactNative:
+    :path: "../node_modules/@tap-payments/gosell-sdk-react-native/ios"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -554,10 +639,12 @@ SPEC CHECKSUMS:
   Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
-  CocoaAsyncSocket: 694058e7c0ed05a9e217d1b3c7ded962f4180845
+  CardIODynamic: 4a0d2d0e7b82993ceca67491564934c3475fbe79
+  CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   CocoaLibEvent: 2fab71b8bd46dd33ddb959f7928ec5909f838e3f
   CodePush: 4e72e70067c1442ddfe25e3e53b23a6fa573f5c6
   DoubleConversion: cde416483dac037923206447da6e1454df403714
+  EditableTextInsetsTextFieldV2: 09a945c086dbcef688fe4fbb8302b408c146c391
   FBLazyVector: 3bb422f41b18121b71783a905c10e58606f7dc3e
   FBReactNativeSpec: f2c97f2529dd79c083355182cc158c9f98f4bd6e
   FBSDKCoreKit: b46507dc8b8cefed31d644e74d7cc30e2a715ef8
@@ -572,7 +659,9 @@ SPEC CHECKSUMS:
   FlipperKit: ab353d41aea8aae2ea6daaf813e67496642f3d7d
   Folly: b73c3869541e86821df3c387eb0af5f65addfab4
   glog: 40a13f7840415b9a77023fbcae0f1e6f43192af3
+  goSellSDK: 66742f386d33f6945c3aa98ee6ebe3a66eb741a8
   JWT: 9b5c05abbcc1a0e69c3c91e1655b3387fc7e581d
+  Kingfisher: adde87a4f74f6a3845395769354efff593581740
   OpenSSL-Universal: ff34003318d5e1163e9529b08470708e389ffcdd
   RCTRequired: 082f10cd3f905d6c124597fd1c14f6f2655ff65e
   RCTTypeSafety: 8c9c544ecbf20337d069e4ae7fd9a377aadf504b
@@ -607,14 +696,30 @@ SPEC CHECKSUMS:
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
+  RNGosellSdkReactNative: 296eab3e917c59713b23d5fe26401a58072ea84b
   RNReanimated: dd8c286ab5dd4ba36d3a7fef8bff7e08711b5476
   RNScreens: 0e91da98ab26d5d04c7b59a9b6bd694124caf88c
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
   SSZipArchive: 62d4947b08730e4cda640473b0066d209ff033c9
+  SwiftyRSA: 3b9c9179744217951facc6a3e9ae8d8c97061ffa
+  TapAdditionsKitV2: ba369802e9575c3475ce6d5af228cf60c68edfc9
+  TapApplicationV2: aee3d046c4272778431e1535de6cab34e1269f8c
+  TapBundleLocalization: c7d7c14850223b0ef447aca1269d7308f78d54f9
+  TapCardValidator: 8d43b6e8a1a78276c03116a5b625041adeffeb0d
+  TapEditableViewV2: 8f817337714ee2e89199a02aa2feaad009865ff2
+  TapFontsKitV2: f2a5b342c18784dd2068c1885313057780c49a3d
+  TapGLKitV2: d3ef8bc5d1655a1d46e1696cfdcf19ae6e6d4d35
+  TapKeychain: 143aa70bb2d1b094e0298e944660264034c79849
+  TapNetworkManagerV2: f6e844c76d49c764633722b70e14398409a10317
+  TapNibViewV2: 814b18346837d9dab611a211a702b9b0b8369d07
+  TapResponderChainInputViewV2: 2bb2694e00093a0f64f25c6cf2c670fe25458172
+  TapSearchViewV2: 30e71bdeb9ab0d9bf4ddbf7179ab5614e927fec9
+  TapSwiftFixesV2: a8623a7273c6790b9754ec7e272e96fce7d3a800
+  TapVisualEffectViewV2: b612ffee4d05004c449d433fe45aba9563c8a508
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: cc70ead52472c01659e287d3a24e7e162cc5a1d5
+PODFILE CHECKSUM: 21e7f2f9294d183289c2e6ee12f38526abdb6c74
 
 COCOAPODS: 1.9.3

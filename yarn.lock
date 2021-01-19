@@ -1393,6 +1393,11 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
+"@tap-payments/gosell-sdk-react-native@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@tap-payments/gosell-sdk-react-native/-/gosell-sdk-react-native-1.0.3.tgz#3af6177b28e848a1bbe1507e860a16def6878671"
+  integrity sha512-FqjGpA0ran6F+3PGY02tow3Gfs9EoviJnTCnPaKU2NvuBzVlr7AvobQ11iqm85s5YZ2W+Ya7Wo6csDhXXwdsGg==
+
 "@tootallnate/once@1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"

@@ -15,6 +15,7 @@ import {Provider} from 'react-redux';
 import Authorize from './Authorize';
 import store from './redux/store';
 import Register from './Screen/Account/Register/Register';
+import TapPayment from './TapPayment';
 
 const Stack = createStackNavigator();
 
@@ -31,9 +32,10 @@ const App: () => React$Node = () => {
       <StatusBar barStyle="dark-content" />
       <NavigationContainer>
         <SafeAreaView style={{flex: 1}}>
-          <Stack.Navigator headerMode="none" initialRouteName="Authorize">
+          <Stack.Navigator headerMode="none" initialRouteName="TapPayment">
             <Stack.Screen name="Authorize" component={Authorize} />
             <Stack.Screen name="Register" component={Register} />
+            <Stack.Screen name="TapPayment" component={TapPayment} />
           </Stack.Navigator>
         </SafeAreaView>
       </NavigationContainer>
