@@ -8,13 +8,23 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import {StatusBar, StyleSheet, SafeAreaView} from 'react-native';
+import {
+  StatusBar,
+  StyleSheet,
+  SafeAreaView,
+  Platform,
+  UIManager,
+} from 'react-native';
 import codePush from 'react-native-code-push';
 import 'react-native-gesture-handler';
 import {Provider} from 'react-redux';
 import Authorize from './Authorize';
 import store from './redux/store';
 import Register from './Screen/Account/Register/Register';
+
+if (Platform.isAndroid && UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 const Stack = createStackNavigator();
 

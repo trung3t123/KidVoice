@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
     padding: 10,
     height: '100%',
-    backgroundColor: '#014074',
+    backgroundColor: '#6e7401',
     borderRadius: 5,
   },
   bookElementContent: {
@@ -20,14 +20,15 @@ const styles = StyleSheet.create({
   },
 });
 
-class BookElement extends Component {
+class TrackElement extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   render() {
-    const {bookName, bookImage} = this.props;
+    const {trackName, trackImage, trackArtist} = this.props;
+
     return (
       <View style={styles.bookElementContainer}>
         <View style={styles.bookElementContent}>
@@ -38,16 +39,19 @@ class BookElement extends Component {
               width: '100%',
             }}
             source={{
-              uri: URL.SERVER + ':5035/tracks/getTrackImage/' + bookImage,
+              uri: URL.SERVER + ':5035/tracks/getTrackImage/' + trackImage,
             }}
           />
         </View>
         <Text numberOfLines={2} style={{marginTop: 10, color: 'white'}}>
-          {bookName}
+          {trackName}
+        </Text>
+        <Text numberOfLines={2} style={{marginTop: 10, color: 'white'}}>
+          {trackArtist}
         </Text>
       </View>
     );
   }
 }
 
-export default BookElement;
+export default TrackElement;

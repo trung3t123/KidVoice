@@ -34,6 +34,22 @@ export const loadTracklist = (playlistId) => {
   };
 };
 
+export const getTrackListPage = (page = 1) => {
+  return function (dispatch) {
+    return Axios.get(URL.SERVER + ':5035/tracks/getTrackListPage/?page=' + page)
+      .then((response) => {
+        dispatch({
+          type: 'GET_HOME_TRACKS',
+          homeTrackList: response.data.tracks,
+        });
+      })
+      .catch((error) => {
+        console.log('error', error);
+      });
+  };
+};
+
+
 export const addTrackToPlaylist = (trackId, playlistId) => {
   return function (dispatch) {
     return Axios.post(URL.SERVER + ':5035/tracks/addTrackToPlaylist', {

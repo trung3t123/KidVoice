@@ -1,5 +1,5 @@
 const URL = {
-  SERVER: 'http://192.168.10.156',
+  SERVER: 'http://192.168.0.102',
 };
 
 export default URL;

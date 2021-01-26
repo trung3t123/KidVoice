@@ -1,5 +1,8 @@
 const initialState = {
-  books: [],
+  books: [], //default user's books
+  appBooks: [],
+  homeBooks: [],
+  downloadedBooks: [],
 };
 
 const booksReducers = (state = initialState, action) => {
@@ -8,6 +11,12 @@ const booksReducers = (state = initialState, action) => {
       return {
         ...state,
         books: action.books,
+      };
+    }
+    case 'LOAD_HOME_BOOKS': {
+      return {
+        ...state,
+        homeBooks: action.homeBooks,
       };
     }
     default:

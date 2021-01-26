@@ -6,18 +6,8 @@ const deviceHeight = Dimensions.get('screen').height;
 const deviceWidth = Dimensions.get('screen').width;
 
 const styles = StyleSheet.create({
-  bookElementContainer: {
-    width: deviceWidth / 2.5,
-    marginRight: 20,
-    padding: 10,
-    height: '100%',
-    backgroundColor: '#014074',
-    borderRadius: 5,
-  },
-  bookElementContent: {
-    flex: 1,
-    padding: 10,
-  },
+  bookElementContainer: {},
+  bookElementContent: {},
 });
 
 class BookElement extends Component {

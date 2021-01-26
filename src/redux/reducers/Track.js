@@ -1,6 +1,7 @@
 const initialState = {
   trackList: [],
   suggestedTracks: [],
+  homeTrackList: [],
   addTrackVisible: false,
   playingTrack: [],
   playing: false,
@@ -19,6 +20,13 @@ const trackReducers = (state = initialState, action) => {
         ...state,
         playing: true,
       };
+    }
+
+    case 'GET_HOME_TRACKS': {
+      return {
+        ...state,
+        homeTrackList : action.homeTrackList
+      }
     }
 
     case 'SET_PLAYING_FALSE': {

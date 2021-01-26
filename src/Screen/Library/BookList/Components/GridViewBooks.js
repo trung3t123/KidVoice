@@ -19,7 +19,7 @@ class GridViewBooks extends Component {
     return (
       <View style={styles.itemGridContainer}>
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate('BookPreview')}>
+          onPress={() => navigation.navigate('BookPreview', item)}>
           <View style={styles.itemGridBackground}>
             <Image
               resizeMode="contain"
@@ -48,6 +48,7 @@ class GridViewBooks extends Component {
             </View>
           </TouchableWithoutFeedback>
           <TouchableOpacity
+            onPress={() => navigation.navigate('Pricing')}
             style={{justifyContent: 'center', paddingRight: 10}}>
             <CustomIcon
               iconType="MaterialCommunityIcons"

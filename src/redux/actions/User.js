@@ -4,8 +4,6 @@ import {LoginManager, AccessToken} from 'react-native-fbsdk';
 import Toast from 'react-native-simple-toast';
 import URL from '../../Utils/constant/ConstURL';
 
-
-
 export const logoutUser = () => {
   console.log('helo, logged out');
   return function (dispatch) {
@@ -50,6 +48,7 @@ export const loginFacebook = () => {
 
           AccessToken.getCurrentAccessToken()
             .then((data) => {
+              console.log('login', data);
               Axios.post(URL.SERVER + ':5035/api/users/loginFacebook', {
                 userToken: data.accessToken,
                 userID: data.userID,

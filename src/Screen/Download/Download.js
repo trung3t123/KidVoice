@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, Dimensions} from 'react-native';
+import RNFetchBlob from 'rn-fetch-blob';
 
 const deviceHeight = Dimensions.get('screen').height;
 const deviceWidth = Dimensions.get('window').width;
@@ -9,6 +10,12 @@ class Download extends Component {
     super(props);
     this.state = {};
   }
+
+  componentDidMount = () => {
+    // this.readFile();
+  };
+
+  readFile = () => {};
 
   render() {
     return (
