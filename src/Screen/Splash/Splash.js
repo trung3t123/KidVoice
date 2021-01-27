@@ -1,6 +1,6 @@
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import React, {Component} from 'react';
-import {Dimensions, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, StyleSheet, Text, View, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import TrackPlayer from 'react-native-track-player';
@@ -12,6 +12,8 @@ import News from '../News/News';
 import Search from '../Search/Search';
 import {connect} from 'react-redux';
 import {setPlaying} from '../../redux/actions/Track';
+import URL from '../../Utils/constant/ConstURL';
+import IMAGE from '../../Utils/ImageConst';
 
 const Tab = createMaterialBottomTabNavigator();
 const deviceHeight = Dimensions.get('screen').height;
@@ -20,6 +22,7 @@ const deviceWidth = Dimensions.get('screen').width;
 const styles = StyleSheet.create({
   mediaPLayer: {
     position: 'absolute',
+    paddingHorizontal: 20,
     bottom: (deviceHeight * 9) / 100,
     height: (deviceHeight * 9) / 100,
     width: '100%',
@@ -47,6 +50,7 @@ class Splash extends Component {
     this.state = {
       title: 'Bạn Chưa chọn track nào hihi',
       artist: 'chọn track bất kì đi nhé',
+      image: null,
       duration: '',
       playerVisible: false,
     };
@@ -81,10 +85,10 @@ class Splash extends Component {
     TrackPlayer.addEventListener('playback-state', async (data) => {
       console.log('[somebody] data', data.state);
       switch (data.state) {
-        case 3: {
+        case 'playing': {
           return this.props.setPlayingTrue();
         }
-        case 2: {
+        case 'paused': {
           return this.props.setPlayingFalse();
         }
         default:
@@ -96,9 +100,9 @@ class Splash extends Component {
       TrackPlayer.getTrack(trackId).then((data) => {
         this.setState({
           title: data.title,
+          image: data.artwork,
           artist: data.artist,
           duration: data.duration,
-          artwork: data.artwork,
         });
       });
     });
@@ -182,30 +186,6 @@ class Splash extends Component {
           />
           <Tab.Screen
             options={{
-              tabBarLabel: 'Bản tin ',
-              tabBarIcon: ({focused, tintColor = 'grey'}) =>
-                focused ? (
-                  <CustomIcon
-                    iconType="Entypo"
-                    name="news"
-                    size={20}
-                    color="#ffffff"
-                  />
-                ) : (
-                  <CustomIcon
-                    iconType="Entypo"
-                    name="news"
-                    size={25}
-                    color="#c1c1c1"
-                  />
-                ),
-            }}
-            name="News"
-            component={News}
-          />
-
-          <Tab.Screen
-            options={{
               tabBarLabel: 'Tải về ',
               tabBarIcon: ({focused, tintColor = 'grey'}) =>
                 focused ? (
@@ -259,11 +239,18 @@ class Splash extends Component {
                 this.props.navigation.navigate('Player');
               }}
               style={styles.playListContent}>
-              <CustomIcon
-                iconType="Entypo"
-                name="folder-music"
-                size={30}
-                color="#ffffff"
+              <Image
+                style={{width: 50, height: '100%', resizeMode: 'contain'}}
+                source={
+                  this.state.image
+                    ? {
+                        uri:
+                          URL.SERVER +
+                          ':5035/tracks/getTrackImage/' +
+                          this.state.image,
+                      }
+                    : IMAGE.appIcon
+                }
               />
               <View style={{flexDirection: 'column'}}>
                 <Text

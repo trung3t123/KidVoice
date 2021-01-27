@@ -6,6 +6,9 @@ import {
   TouchableOpacity,
   Dimensions,
   ScrollView,
+  FlatList,
+  RefreshControl,
+  ActivityIndicator,
 } from 'react-native';
 import {connect, useDispatch} from 'react-redux';
 import {
@@ -13,6 +16,9 @@ import {
   setAddTrackVisible,
 } from '../../../redux/actions/Track';
 import CustomIcon from '../../../Utils/CustomIcon';
+import {Searchbar} from 'react-native-paper';
+import Axios from 'axios';
+import URL from '../../../Utils/constant/ConstURL';
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
@@ -20,15 +26,20 @@ const deviceHeight = Dimensions.get('screen').height;
 const styles = StyleSheet.create({
   modalContainer: {
     padding: 20,
-    height: (deviceHeight * 70) / 100,
+    flex: 1,
     width: '100%',
     backgroundColor: '#fcfffd',
+  },
+  searchBarStyle: {
+    paddingHorizontal: 9,
+    borderRadius: 9,
   },
   listTrackContainer: {
     backgroundColor: '#d6d6d6',
     height: '100%',
     width: '100%',
     padding: 10,
+    flex: 1,
   },
   trackStyle: {
     flexDirection: 'row',
@@ -53,7 +64,7 @@ function Track(props) {
     setAddTrackStatus(false);
     dispatch(addTrackToPlaylist(trackId, playlistId));
   };
-  renderAddTrack = () => {
+  const renderAddTrack = () => {
     if (addTrackStatus) {
       return (
         <TouchableOpacity
@@ -67,7 +78,7 @@ function Track(props) {
           />
         </TouchableOpacity>
       );
-    } else
+    } else {
       return (
         <View
           onPress={() => addTrack(props.trackId, props.playlistId)}
@@ -80,6 +91,7 @@ function Track(props) {
           />
         </View>
       );
+    }
   };
   return (
     <View style={styles.trackStyle}>
@@ -107,12 +119,84 @@ function Track(props) {
 class AddTrackModal extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      trackData: [],
+      page: 1,
+      isLoadingData: false,
+      refreshing: false,
+    };
   }
 
-  render() {
+  getTrackData = () => {
+    const {page, trackData} = this.state;
+    this.setState({isLoadingData: true});
+    if (page === 1) {
+      Axios.get(URL.SERVER + ':5035/tracks/allTracks/' + page).then((res) => {
+        this.setState({
+          trackData: res.data.tracks,
+          page: page + 1,
+          isLoadingData: false,
+        });
+      });
+    } else {
+      Axios.get(URL.SERVER + ':5035/tracks/allTracks/' + page).then((res) => {
+        this.setState({
+          trackData: [...trackData, ...res.data.tracks],
+          page: page + 1,
+          isLoadingData: false,
+        });
+      });
+    }
+  };
+
+  componentDidMount = () => {
+    this.getTrackData();
+  };
+
+  searchData = async (text) => {
+    this.setState({isLoadingData: true, page: 1});
+
+    if (text.length <= 0) {
+      this.getTrackData();
+    } else {
+      Axios.get(URL.SERVER + ':5035/tracks/searchTrack/' + text).then((res) => {
+        this.setState({
+          trackData: res.data.track,
+          page: 1,
+          isLoadingData: false,
+        });
+      });
+    }
+  };
+
+  isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+    const paddingToBottom = 20;
     return (
-      <ScrollView style={styles.modalContainer}>
+      layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom
+    );
+  };
+
+  onMomentumScrollEndHandler = (nativeEvent, getDataAction) => {
+    if (this.isCloseToBottom(nativeEvent)) {
+      getDataAction;
+    }
+  };
+
+  renderFooterComponent = (isLoadingData) => (
+    <View>
+      {isLoadingData ? (
+        <ActivityIndicator size="large" color="black" />
+      ) : (
+        <View />
+      )}
+    </View>
+  );
+
+  render() {
+    const {trackData, isLoadingData} = this.state;
+    return (
+      <View style={styles.modalContainer}>
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <TouchableOpacity
             onPress={() => this.props.setAddTrackVisible(false)}
@@ -124,24 +208,48 @@ class AddTrackModal extends Component {
               color="#a6a6a6"
             />
           </TouchableOpacity>
-          <Text style={{fontWeight: '700', fontSize: 15}}> AddTrackModal </Text>
+          <Text style={{fontWeight: '700', fontSize: 15}}> Thêm bài hát </Text>
         </View>
-        <View style={{marginTop: 10, alignItems: 'center'}}>
+
+        <View style={{flex: 1, marginTop: 10, alignItems: 'center'}}>
+          <Searchbar
+            style={styles.searchBarStyle}
+            onChangeText={(text) => {
+              this.searchData(text);
+            }}
+          />
           <View style={styles.listTrackContainer}>
-            {this.props.suggestedTracks.map((track) => {
-              return (
-                <Track
-                  key={track._id}
-                  playlistId={this.props.playlistId}
-                  trackId={track._id}
-                  trackName={track.title}
-                  artist={track.artist}
+            <FlatList
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={() => this.getTrackData()}
                 />
-              );
-            })}
+              }
+              showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
+              onMomentumScrollEnd={({nativeEvent}) =>
+                this.onMomentumScrollEndHandler(
+                  nativeEvent,
+                  this.getTrackData(),
+                )
+              }
+              data={trackData}
+              renderItem={({item}) => (
+                <Track
+                  key={item._id}
+                  playlistId={this.props.playlistId}
+                  trackId={item._id}
+                  trackName={item.title}
+                  artist={item.artist}
+                />
+              )}
+              ListFooterComponent={this.renderFooterComponent(isLoadingData)}
+              keyExtractor={(item) => item?._id?.toString()}
+            />
           </View>
         </View>
-      </ScrollView>
+      </View>
     );
   }
 }

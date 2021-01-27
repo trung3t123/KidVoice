@@ -7,12 +7,9 @@ import {
   Image,
   LayoutAnimation,
   TouchableOpacity,
-  AsyncStorage,
 } from 'react-native';
 import URL from '../../../Utils/constant/ConstURL';
 import CustomIcon from '../../../Utils/CustomIcon';
-import RNFetchBlob from 'rn-fetch-blob';
-import Toast from 'react-native-simple-toast';
 
 const deviceHeight = Dimensions.get('screen').height;
 const deviceWidth = Dimensions.get('screen').width;
@@ -45,56 +42,8 @@ class BookElement extends Component {
     return true;
   }
 
-  checkDownloadStatus = () => {};
-
-  downloadBook = () => {
-    let dirs = RNFetchBlob.fs.dirs;
-    const {book} = this.props;
-    RNFetchBlob.config({
-      path: dirs.CacheDir + '/' + book._id + '.pdf',
-      fileCache: true,
-    })
-      .fetch('GET', URL.SERVER + ':5035/books/openBook/' + book._id, {
-        //some headers ..
-      })
-      .progress({count: 10}, (received, total) => {
-        console.log('progress', received / total);
-      })
-      .then(async (res) => {
-        console.log('path', res.path());
-        Toast.show('downloaded');
-        await AsyncStorage.getItem('bookArray')
-          .then((req) => JSON.parse(req))
-          .then(async (array) => {
-            if (array === null) {
-              let newDownloadedBook = {
-                ...book,
-                path: res.path(),
-              };
-              let bookArray = [newDownloadedBook];
-              console.log('bookArray', bookArray);
-              await AsyncStorage.setItem(
-                'bookArray',
-                JSON.stringify(bookArray),
-              );
-            } else {
-              let newDownloadedBook = {
-                ...book,
-                path: res.path(),
-              };
-              let bookArray = [...array, newDownloadedBook];
-              console.log('bookArray', bookArray);
-              await AsyncStorage.setItem(
-                'bookArray',
-                JSON.stringify(bookArray),
-              );
-            }
-          });
-      });
-  };
-
   render() {
-    const {bookName, bookImage, bookId} = this.props;
+    const {bookName, bookImage, bookId, book} = this.props;
     const {detailHeight} = this.state;
     return (
       <View>
@@ -139,22 +88,15 @@ class BookElement extends Component {
           <View style={{flexDirection: 'row'}}>
             <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate('BookPreview', {bookId: bookId});
+                this.props.navigation.navigate('BookPreview', {
+                  isDownloaded: true,
+                  path: book.path,
+                });
               }}
               style={{paddingHorizontal: 20, borderRightWidth: 1}}>
               <CustomIcon
                 iconType="FontAwesome5"
                 name="book-reader"
-                size={25}
-                color="#5d5d5d"
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => this.downloadBook()}
-              style={{paddingHorizontal: 20, borderRightWidth: 1}}>
-              <CustomIcon
-                iconType="FontAwesome"
-                name="download"
                 size={25}
                 color="#5d5d5d"
               />

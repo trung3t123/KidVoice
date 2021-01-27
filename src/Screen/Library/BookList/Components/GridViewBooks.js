@@ -19,7 +19,9 @@ class GridViewBooks extends Component {
     return (
       <View style={styles.itemGridContainer}>
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate('BookPreview', item)}>
+          onPress={() =>
+            navigation.navigate('BookPreview', {bookId: item._id})
+          }>
           <View style={styles.itemGridBackground}>
             <Image
               resizeMode="contain"

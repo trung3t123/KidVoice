@@ -55,6 +55,8 @@ class Books extends Component {
             data={books}
             renderItem={({item}) => (
               <BookElement
+                navigation={navigation}
+                bookId={item._id}
                 bookName={item.bookName}
                 bookImage={
                   item.bookImage ? item.bookImage : '5fbe6fa64d4e4c0748e27711'

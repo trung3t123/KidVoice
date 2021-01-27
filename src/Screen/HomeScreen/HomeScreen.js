@@ -33,7 +33,7 @@ class HomeScreen extends Component {
         <Header navigation={this.props.navigation} headerText="Trang Chủ" />
         <View style={styles.contentContainer}>
           <ScrollView style={styles.content}>
-            <HighLights />
+            <HighLights navigation={this.props.navigation} />
             <Books navigation={this.props.navigation} />
             <Track navigation={this.props.navigation} />
           </ScrollView>

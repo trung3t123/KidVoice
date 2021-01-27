@@ -124,36 +124,10 @@ const PLaylistDetails = (props) => {
               <CustomIcon
                 iconType="EvilIcons"
                 name="user"
-                size={25}
+                size={30}
                 color="#000000"
               />
-              <Text>{userName}</Text>
-            </View>
-            <View style={{flexDirection: 'row'}}>
-              <TouchableOpacity style={{marginRight: 10}}>
-                <CustomIcon
-                  iconType="AntDesign"
-                  name="download"
-                  size={25}
-                  color="#636363"
-                />
-              </TouchableOpacity>
-              <TouchableOpacity style={{marginRight: 10}}>
-                <CustomIcon
-                  iconType="Entypo"
-                  name="share"
-                  size={25}
-                  color="#636363"
-                />
-              </TouchableOpacity>
-              <TouchableOpacity style={{marginRight: 10}}>
-                <CustomIcon
-                  iconType="MaterialIcons"
-                  name="more-horiz"
-                  size={25}
-                  color="#636363"
-                />
-              </TouchableOpacity>
+              <Text style={{fontSize: 15}}>{userName}</Text>
             </View>
           </View>
           {trackList.length != 0 ? (

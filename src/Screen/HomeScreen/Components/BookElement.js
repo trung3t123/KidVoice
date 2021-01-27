@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, Dimensions, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import URL from '../../../Utils/constant/ConstURL';
 
 const deviceHeight = Dimensions.get('screen').height;
@@ -11,7 +18,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
     padding: 10,
     height: '100%',
-    backgroundColor: '#014074',
+    backgroundColor: '#aca9a9',
     borderRadius: 5,
   },
   bookElementContent: {
@@ -27,9 +34,13 @@ class BookElement extends Component {
   }
 
   render() {
-    const {bookName, bookImage} = this.props;
+    const {bookName, bookImage, bookId} = this.props;
     return (
-      <View style={styles.bookElementContainer}>
+      <TouchableOpacity
+        onPress={() =>
+          this.props.navigation.navigate('BookPreview', {bookId: bookId})
+        }
+        style={styles.bookElementContainer}>
         <View style={styles.bookElementContent}>
           <Image
             style={{
@@ -45,7 +56,7 @@ class BookElement extends Component {
         <Text numberOfLines={2} style={{marginTop: 10, color: 'white'}}>
           {bookName}
         </Text>
-      </View>
+      </TouchableOpacity>
     );
   }
 }

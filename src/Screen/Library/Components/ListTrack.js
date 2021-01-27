@@ -1,21 +1,21 @@
-import React, {Component, useState, useEffect} from 'react';
+import React, {Component, useState} from 'react';
 import {
-  View,
-  Text,
   Dimensions,
-  TouchableOpacity,
-  StyleSheet,
   Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
+import TrackPlayer from 'react-native-track-player';
 import {connect, useDispatch} from 'react-redux';
 import {
   addTrackToPlaylist,
   loadSuggestTracks,
   setAddTrackVisible,
 } from '../../../redux/actions/Track';
-import CustomIcon from '../../../Utils/CustomIcon';
-import TrackPlayer from 'react-native-track-player';
 import URL from '../../../Utils/constant/ConstURL';
+import CustomIcon from '../../../Utils/CustomIcon';
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
@@ -57,9 +57,6 @@ const styles = StyleSheet.create({
   },
 });
 function Trackplay(props) {
-  useEffect(() => {
-    console.log('[listTrack] imageTrack', props.trackImage);
-  }, []);
   async function playAll(trackId, trackName, artist, duration, trackImage) {
     await TrackPlayer.reset();
     await TrackPlayer.add({
@@ -141,7 +138,7 @@ function Track(props) {
           />
         </TouchableOpacity>
       );
-    } else
+    } else {
       return (
         <View
           onPress={() => addTrack(props.trackId, props.playlistId)}
@@ -154,6 +151,7 @@ function Track(props) {
           />
         </View>
       );
+    }
   };
   return (
     <View style={styles.trackStyle}>
@@ -238,7 +236,7 @@ class ListTrack extends Component {
           </View>
         </View>
       );
-    } else
+    } else {
       return (
         <View style={{flex: 1, padding: 10}}>
           <View style={{width: '100%', alignItems: 'center'}}>
@@ -265,6 +263,7 @@ class ListTrack extends Component {
           })}
         </View>
       );
+    }
   }
 }
 

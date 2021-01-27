@@ -41,53 +41,6 @@ class TrackElement extends Component {
     };
   }
 
-  downloadTrack = () => {
-    let dirs = RNFetchBlob.fs.dirs;
-    const {track} = this.props;
-
-    RNFetchBlob.config({
-      path: dirs.CacheDir + '/' + track._id + '.mp3',
-      fileCache: true,
-    })
-      .fetch('GET', URL.SERVER + ':5035/tracks/openTrack/' + track._id, {
-        //some headers ..
-      })
-      .progress({count: 10}, (received, total) => {
-        console.log('progress', received / total);
-      })
-      .then(async (res) => {
-        console.log('path', res.path());
-        Toast.show('downloaded');
-        await AsyncStorage.getItem('trackArray')
-          .then((req) => JSON.parse(req))
-          .then(async (array) => {
-            if (array === null) {
-              let newDownloadedTrack = {
-                ...track,
-                path: res.path(),
-              };
-              let trackArray = [newDownloadedTrack];
-              console.log('trackArray', trackArray);
-              await AsyncStorage.setItem(
-                'trackArray',
-                JSON.stringify(trackArray),
-              );
-            } else {
-              let newDownloadedTrack = {
-                ...track,
-                path: res.path(),
-              };
-              let trackArray = [...array, newDownloadedTrack];
-              console.log('trackArray', trackArray);
-              await AsyncStorage.setItem(
-                'trackArray',
-                JSON.stringify(trackArray),
-              );
-            }
-          });
-      });
-  };
-
   shouldComponentUpdate() {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     return true;
@@ -99,7 +52,7 @@ class TrackElement extends Component {
     const playlistReady = [];
     playlistReady.push({
       id: track._id,
-      url: URL.SERVER + ':5035/tracks/openTrack/' + track._id,
+      url: 'file://' + track.path,
       title: track.title,
       artist: track.artist,
       duration: track.duration,
@@ -174,16 +127,6 @@ class TrackElement extends Component {
               <CustomIcon
                 iconType="FontAwesome"
                 name="play"
-                size={25}
-                color="#5d5d5d"
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => this.downloadTrack()}
-              style={{paddingHorizontal: 20, borderRightWidth: 1}}>
-              <CustomIcon
-                iconType="FontAwesome"
-                name="download"
                 size={25}
                 color="#5d5d5d"
               />

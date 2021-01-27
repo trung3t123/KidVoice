@@ -30,7 +30,7 @@ export const loadBooksFromCache = () => {
 
 export const loadHomeBook = (page = 1) => {
   return function (dispatch) {
-    return Axios.get(URL.SERVER + ':5035/books/getAllBook/?page=' + page)
+    return Axios.get(URL.SERVER + ':5035/books/getAllBook/' + page)
       .then((response) => {
         dispatch({
           type: 'LOAD_HOME_BOOKS',

@@ -56,6 +56,9 @@ class Track extends Component {
               console.log(item);
               return (
                 <TrackElement
+                  navigation={navigation}
+                  track={item}
+                  trackId={item._id}
                   trackName={item.title}
                   trackImage={
                     item.trackImage

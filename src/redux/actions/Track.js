@@ -3,7 +3,7 @@ import URL from '../../Utils/constant/ConstURL';
 
 export const loadSuggestTracks = () => {
   return function (dispatch) {
-    return Axios.get(URL.SERVER + ':5035/tracks/allTracks')
+    return Axios.get(URL.SERVER + ':5035/tracks/allTracks/1')
       .then((response) => {
         dispatch({
           type: 'ADD_SUGGEST_TRACKLIST',
@@ -48,7 +48,6 @@ export const getTrackListPage = (page = 1) => {
       });
   };
 };
-
 
 export const addTrackToPlaylist = (trackId, playlistId) => {
   return function (dispatch) {

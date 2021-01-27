@@ -6,6 +6,9 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
+  LayoutAnimation,
+  ActivityIndicator,
+  RefreshControl,
 } from 'react-native';
 import Header from '../Components/Header/Header';
 import {Searchbar} from 'react-native-paper';
@@ -34,7 +37,10 @@ class Search extends Component {
       trackData: [],
       bookData: [],
       filterMode: 'track',
-      page: 1,
+      pageTrack: 1,
+      pageBook: 1,
+      isLoadingData: false,
+      refreshing: false,
     };
   }
 
@@ -47,61 +53,125 @@ class Search extends Component {
     this.getBookData();
   }
 
-  getTrackData = () => {
-    const {page} = this.state;
+  renderFooterComponent = (isLoadingData) => (
+    <View>
+      {isLoadingData ? (
+        <ActivityIndicator size="large" color="black" />
+      ) : (
+        <View />
+      )}
+    </View>
+  );
 
-    Axios.get(URL.SERVER + ':5035/tracks/allTracks?page=' + page).then(
-      (res) => {
-        this.setState({trackData: res.data.tracks});
-      },
+  isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+    const paddingToBottom = 20;
+    return (
+      layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom
     );
+  };
+
+  onMomentumScrollEndHandler = (nativeEvent, getDataAction) => {
+    if (this.isCloseToBottom(nativeEvent)) {
+      getDataAction;
+    }
+  };
+
+  getTrackData = async () => {
+    const {pageTrack, trackData} = this.state;
+    this.setState({isLoadingData: true});
+    if (pageTrack === 1) {
+      Axios.get(URL.SERVER + ':5035/tracks/allTracks/' + pageTrack).then(
+        (res) => {
+          this.setState({
+            trackData: res.data.tracks,
+            pageTrack: pageTrack + 1,
+            isLoadingData: false,
+          });
+        },
+      );
+    } else {
+      Axios.get(URL.SERVER + ':5035/tracks/allTracks/' + pageTrack).then(
+        (res) => {
+          this.setState({
+            trackData: [...trackData, ...res.data.tracks],
+            pageTrack: pageTrack + 1,
+            isLoadingData: false,
+          });
+        },
+      );
+    }
   };
 
   getBookData = () => {
-    const {page} = this.state;
-
-    Axios.get(URL.SERVER + ':5035/books/getAllBook?page=' + page).then(
-      (res) => {
-        this.setState({bookData: res.data.books});
-      },
-    );
+    const {pageBook, bookData} = this.state;
+    this.setState({isLoadingData: true});
+    if (pageBook === 1) {
+      Axios.get(URL.SERVER + ':5035/books/getAllBook/' + pageBook).then(
+        (res) => {
+          this.setState({
+            bookData: res.data.books,
+            pageBook: pageBook + 1,
+            isLoadingData: false,
+          });
+        },
+      );
+    } else {
+      Axios.get(URL.SERVER + ':5035/books/getAllBook/' + pageBook).then(
+        (res) => {
+          this.setState({
+            bookData: [...bookData, ...res.data.books],
+            pageTrack: pageBook + 1,
+            isLoadingData: false,
+          });
+        },
+      );
+    }
   };
-  // getTrackData = () => {
-  //   let percent = 0;
-  //   const ios = RNFetchBlob.ios;
-  //   //   let arr = fileUri.split('/')
-  //   // const dirs = RNFetchBlob.fs.dirs
-  //   // filePath = `${dirs.DocumentDir}/${arr[arr.length - 1]}`
-  //   RNFetchBlob.config({
-  //     // add this option that makes response data to be stored as a file,
-  //     // this is much more performant.
-  //     fileCache: true,
-  //   })
-  //     .fetch(
-  //       'GET',
-  //       URL.SERVER + ':5035/tracks/getTrackImage/5fbe6fa64d4e4c0748e27711',
-  //       {
-  //         //some headers ..
-  //       },
-  //     )
-  //     .progress({count: 10}, (received, total) => {
-  //       console.log('progress', percent++);
-  //     })
-  //     .then((res) => {
-  //       // the temp file path
-  //       ios.openDocument(res.path());
-  //       console.log('The file saved to ', res.path());
-  //     });
-  // };
+
+  searchData = async (text) => {
+    this.setState({isLoadingData: true, pageTrack: 1});
+
+    if (text.length <= 0) {
+      this.getBookData();
+      this.getTrackData();
+    } else {
+      const {filterMode} = this.state;
+      if (filterMode === 'track') {
+        Axios.get(URL.SERVER + ':5035/tracks/searchTrack/' + text).then(
+          (res) => {
+            this.setState({
+              trackData: res.data.track,
+              pageTrack: 1,
+              isLoadingData: false,
+            });
+          },
+        );
+      } else {
+        Axios.get(URL.SERVER + ':5035/books/searchBook/' + text).then((res) => {
+          this.setState({
+            bookData: res.data.books,
+            pageBook: 1,
+            isLoadingData: false,
+          });
+        });
+      }
+    }
+  };
 
   render() {
-    const {trackData, bookData, filterMode} = this.state;
+    const {trackData, bookData, filterMode, isLoadingData} = this.state;
     return (
-      <>
+      <View style={{flex: 1, paddingBottom: (deviceHeight * 9) / 100}}>
         <Header headerText="Tìm kiếm" navigation={this.props.navigation} />
 
         <View style={{flex: 1, marginHorizontal: 20}}>
-          <Searchbar style={styles.searchBarStyle} />
+          <Searchbar
+            style={styles.searchBarStyle}
+            onChangeText={(text) => {
+              this.searchData(text);
+            }}
+          />
           <View style={{flexDirection: 'row'}}>
             <CategoryFilter
               isActive={filterMode === 'track' ? true : false}
@@ -116,10 +186,25 @@ class Search extends Component {
           </View>
           {filterMode === 'track' ? (
             <FlatList
+              onMomentumScrollEnd={({nativeEvent}) =>
+                this.onMomentumScrollEndHandler(
+                  nativeEvent,
+                  this.getTrackData(),
+                )
+              }
               showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
               data={trackData}
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={() => this.getTrackData()}
+                />
+              }
               renderItem={({item}) => (
                 <TrackElement
+                  track={item}
+                  navigation={this.props.navigation}
                   trackName={item.title}
                   trackImage={
                     item.trackImage
@@ -129,16 +214,29 @@ class Search extends Component {
                   trackArtist={item.artist ? item.artist : 'NA'}
                 />
               )}
-              keyExtractor={(item) => item._id.toString()}
+              ListFooterComponent={this.renderFooterComponent(isLoadingData)}
+              keyExtractor={(item) => item?._id?.toString()}
             />
           ) : (
             <FlatList
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={() => this.getBookData()}
+                />
+              }
               showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
+              onMomentumScrollEnd={({nativeEvent}) =>
+                this.onMomentumScrollEndHandler(nativeEvent, this.getBookData())
+              }
               data={bookData}
               renderItem={({item}) => {
-                console.log(item);
                 return (
                   <BookElement
+                    navigation={this.props.navigation}
+                    book={item}
+                    bookId={item._id}
                     bookName={item.bookName}
                     bookImage={
                       item.bookImage
@@ -148,11 +246,12 @@ class Search extends Component {
                   />
                 );
               }}
-              keyExtractor={(item) => item._id.toString()}
+              ListFooterComponent={this.renderFooterComponent(isLoadingData)}
+              keyExtractor={(item) => item?._id?.toString()}
             />
           )}
         </View>
-      </>
+      </View>
     );
   }
 }

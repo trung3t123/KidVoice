@@ -54,10 +54,16 @@ class BookPreview extends Component {
   render() {
     const {isHideHeader, page} = this.state;
     const {route, navigation} = this.props;
-    const bookId = route?.params?.item?._id;
+    const bookId = route?.params?.bookId;
+    const isDownloaded = route?.params?.isDownloaded;
+    console.log('isDonwloaded', isDownloaded);
+    const path = route?.params?.path;
     const source = {
-      uri: URL.SERVER + ':5035/books/openBook/' + bookId,
-      cache: true,
+      uri:
+        isDownloaded === true
+          ? 'file://' + path
+          : URL.SERVER + ':5035/books/openBook/' + bookId,
+      cache: false,
     };
     return (
       <View style={styles.screenContainer}>

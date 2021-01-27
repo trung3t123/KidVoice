@@ -1,6 +1,14 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, Dimensions, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import URL from '../../../Utils/constant/ConstURL';
+import TrackPlayer from 'react-native-track-player';
 
 const deviceHeight = Dimensions.get('screen').height;
 const deviceWidth = Dimensions.get('screen').width;
@@ -11,7 +19,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
     padding: 10,
     height: '100%',
-    backgroundColor: '#6e7401',
+    backgroundColor: '#7e7e7e',
     borderRadius: 5,
   },
   bookElementContent: {
@@ -26,11 +34,31 @@ class TrackElement extends Component {
     this.state = {};
   }
 
+  playTrack = async () => {
+    await TrackPlayer.reset();
+    const {track} = this.props;
+    const playlistReady = [];
+    playlistReady.push({
+      id: track._id,
+      url: URL.SERVER + ':5035/tracks/openTrack/' + track._id,
+      title: track.title,
+      artist: track.artist,
+      duration: track.duration,
+      artwork: URL.SERVER + ':5035/tracks/getTrackImage/' + track.trackImage,
+    });
+    TrackPlayer.add(playlistReady).then(async () => {
+      await TrackPlayer.play();
+    });
+    this.props.navigation.navigate('Player');
+  };
+
   render() {
     const {trackName, trackImage, trackArtist} = this.props;
 
     return (
-      <View style={styles.bookElementContainer}>
+      <TouchableOpacity
+        onPress={() => this.playTrack()}
+        style={styles.bookElementContainer}>
         <View style={styles.bookElementContent}>
           <Image
             style={{
@@ -49,7 +77,7 @@ class TrackElement extends Component {
         <Text numberOfLines={2} style={{marginTop: 10, color: 'white'}}>
           {trackArtist}
         </Text>
-      </View>
+      </TouchableOpacity>
     );
   }
 }
