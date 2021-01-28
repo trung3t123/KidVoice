@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import styles from './style';
 import CustomIcon from '../../../../Utils/CustomIcon';
+import URL from '../../../../Utils/constant/ConstURL';
 
 class ListViewBooks extends Component {
   constructor(props) {
@@ -19,21 +20,27 @@ class ListViewBooks extends Component {
     return (
       <View style={styles.itemListContainer}>
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate('BookPreview', item)}>
+          onPress={() =>
+            navigation.navigate('BookPreview', {bookId: item.item._id})
+          }>
           <View style={styles.listImageContainer}>
             <Image
               resizeMode="contain"
               style={styles.imageStyle}
               source={{
                 uri:
-                  'https://images-na.ssl-images-amazon.com/images/I/817kywRJjVL.jpg',
+                  URL.SERVER +
+                  ':5035/tracks/getTrackImage/' +
+                  item.item.bookImage,
               }}
             />
           </View>
         </TouchableWithoutFeedback>
         <View style={styles.listBookContentContainer}>
           <TouchableWithoutFeedback
-            onPress={() => navigation.navigate('BookPreview', item)}>
+            onPress={() =>
+              navigation.navigate('BookPreview', {bookId: item.item._id})
+            }>
             <View style={{flex: 1}}>
               <Text
                 numberOfLines={2}

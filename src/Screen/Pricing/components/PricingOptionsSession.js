@@ -17,29 +17,29 @@ class PricingOptionsSession extends Component {
           rating="-45%"
           chooseOptionHandler={() => chooseOptionHandler(0)}
           active={activeOption === 0 ? true : false}
-          subscribeTime="12 LUNI"
-          subscribeCost="150 Lei"
-          discountedAmount="15.00 Lei/Luna"
-          planDetails="360 lei/an"
+          subscribeTime="12 Tháng"
+          subscribeCost="150.000 đ"
+          discountedAmount="15.000 đ/tháng"
+          planDetails="360 đ/ngày"
           transRate={1}
         />
         <PricingPlan
           chooseOptionHandler={() => chooseOptionHandler(1)}
           active={activeOption === 1 ? true : false}
           rating="-58%"
-          subscribeTime="6 LUNI"
-          subscribeCost="99 Lei"
-          discountedAmount="15.50 Lei/Luna"
-          planDetails="180 lei/an"
+          subscribeTime="6 tháng"
+          subscribeCost="99.000 đ"
+          discountedAmount="15.50 đ/tháng"
+          planDetails="180 đ/ngày"
           transRate={0.6}
         />
         <PricingPlan
           chooseOptionHandler={() => chooseOptionHandler(2)}
           active={activeOption === 2 ? true : false}
           // rating="10%"
-          subscribeTime="1 LUNA"
-          subscribeCost="30 Lei"
-          discountedAmount="1.00 Leu/ zi"
+          subscribeTime="1 tháng"
+          subscribeCost="50.000 đ"
+          discountedAmount="1.00 đ/ ngày"
           planDetails=""
           transRate={0.3}
         />

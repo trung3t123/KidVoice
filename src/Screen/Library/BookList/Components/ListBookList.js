@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   View,
@@ -8,14 +8,28 @@ import {
   Image,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  RefreshControl,
 } from 'react-native';
 import styles from './style';
 import CustomIcon from '../../../../Utils/CustomIcon';
 import GridViewBooks from './GridViewBooks';
 import ListViewBooks from './ListViewBooks';
 import IMAGE from '../../../../Utils/ImageConst';
+import {getUserBooks} from '../../../../redux/actions/Book';
+import {useDispatch} from 'react-redux';
 
-const ListBookList = ({navigation, books, showGrid, setModalVisible}) => {
+const ListBookList = ({
+  userId,
+  navigation,
+  books,
+  showGrid,
+  setModalVisible,
+}) => {
+  const [refreshing, setRefreshing] = useState(false);
+  const dispatch = useDispatch();
+  const getUserBook = () => {
+    dispatch(getUserBooks(userId));
+  };
   useEffect(() => {
     console.log('books', books);
     console.log('showGrid', showGrid);
@@ -61,6 +75,12 @@ const ListBookList = ({navigation, books, showGrid, setModalVisible}) => {
       </TouchableOpacity>
       {books.length > 0 ? (
         <FlatList
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => getUserBook()}
+            />
+          }
           contentContainerStyle={
             showGrid === true ? {alignItems: 'center'} : null
           }

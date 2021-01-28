@@ -86,15 +86,14 @@ class Register extends Component {
   render() {
     return (
       <View style={{flex: 1}}>
-        <CustomLoading isVisible={this.props.user.loadingStatus} />
         <LinearGradient
           start={{x: 0, y: 0}}
           end={{x: 0, y: 1}}
-          colors={['#171717', '#404958', '#6597ea']}
+          colors={['#c9c9c9', '#f5f5f5', '#ffffff']}
           style={styles.linearGradient}>
           <SafeAreaView style={{flex: 1, backgroundColor: ' rgba(0,0,0,0.4)'}}>
             <TouchableOpacity
-              style={{marginLeft: 10}}
+              style={{margin: 20}}
               onPress={() => this.props.navigation.goBack()}>
               <CustomIcon
                 iconType="AntDesign"
@@ -200,7 +199,7 @@ class Register extends Component {
                         backgroundColor: 'rgba(185,183,183,0.4)',
                       },
                     ]}>
-                    <Text style={{color: 'white'}}>Register</Text>
+                    <Text style={{color: 'white'}}>Đăng ký</Text>
                   </TouchableOpacity>
                 </View>
               </View>

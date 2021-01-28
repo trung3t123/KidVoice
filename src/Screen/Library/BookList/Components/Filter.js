@@ -32,15 +32,7 @@ const styles = StyleSheet.create({
 const Filter = ({showGrid, toggleShowGrid}) => {
   return (
     <View style={styles.container}>
-      <View style={styles.filterModeChooser}>
-        <Text>Sort by name</Text>
-        <CustomIcon
-          iconType="AntDesign"
-          name="down"
-          size={15}
-          color="#7f7f7f"
-        />
-      </View>
+      <View style={styles.filterModeChooser} />
       <View style={styles.showingModeChooser}>
         <TouchableWithoutFeedback onPress={() => toggleShowGrid(false)}>
           <View

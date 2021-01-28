@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     height: '100%',
-    width: 70,
+    width: '100%',
     padding: 10,
     backgroundColor: '#5d5d5d',
   },

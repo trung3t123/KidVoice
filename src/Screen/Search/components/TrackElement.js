@@ -14,6 +14,8 @@ import TrackPlayer from 'react-native-track-player';
 import RNFetchBlob from 'rn-fetch-blob';
 import Toast from 'react-native-simple-toast';
 import AsyncStorage from '@react-native-community/async-storage';
+import Axios from 'axios';
+import {connect} from 'react-redux';
 
 const deviceHeight = Dimensions.get('screen').height;
 const deviceWidth = Dimensions.get('screen').width;
@@ -111,6 +113,24 @@ class TrackElement extends Component {
     this.props.navigation.navigate('Player');
   };
 
+  checkDownloadStatus = () => {
+    const {userId, navigation} = this.props;
+    Axios.get(URL.SERVER + ':5035/api/users/checkEnroll/' + userId)
+      .then((response) => {
+        const isEnrolled = response.data.user.enrolled;
+        console.log('response', response.data.user.enrolled);
+        if (isEnrolled === true) {
+          this.downloadTrack();
+        } else {
+          Toast.show('bạn chưa nâng cấp tài khoản!');
+          navigation.navigate('Pricing');
+        }
+      })
+      .catch((error) => {
+        console.log('error', error);
+      });
+  };
+
   render() {
     const {trackName, trackImage, trackArtist} = this.props;
     const {detailHeight} = this.state;
@@ -179,7 +199,7 @@ class TrackElement extends Component {
               />
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.downloadTrack()}
+              onPress={() => this.checkDownloadStatus()}
               style={{paddingHorizontal: 20, borderRightWidth: 1}}>
               <CustomIcon
                 iconType="FontAwesome"
@@ -202,4 +222,10 @@ class TrackElement extends Component {
   }
 }
 
-export default TrackElement;
+function mapStateToProps(state) {
+  return {
+    userId: state.user.user._id,
+  };
+}
+
+export default connect(mapStateToProps)(TrackElement);

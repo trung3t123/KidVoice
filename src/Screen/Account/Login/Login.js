@@ -128,7 +128,6 @@ class Login extends Component {
                       placeholder="Email"
                       placeholderTextColor="#383838"
                       style={{
-                        color: 'white',
                         paddingLeft: 10,
                         backgroundColor: 'transparent',
                         height: (deviceHeight * 10) / 100,
@@ -152,7 +151,6 @@ class Login extends Component {
                       secureTextEntry={true}
                       placeholderTextColor="#383838"
                       style={{
-                        color: 'white',
                         paddingLeft: 10,
                         backgroundColor: 'transparent',
                         height: (deviceHeight * 10) / 100,
@@ -172,17 +170,17 @@ class Login extends Component {
                           color="#ffffff"
                         />
                       </View>
-                      <Text style={{color: 'white'}}>Login With Facebook</Text>
+                      <Text style={{color: 'white'}}>
+                        Đăng nhập bằng Facebook
+                      </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       onPress={this.loginUser}
                       style={styles.loginButton}>
-                      <Text style={{color: 'white'}}>Login</Text>
+                      <Text style={{color: 'white'}}>Đăng nhập</Text>
                     </TouchableOpacity>
                     <View style={{flexDirection: 'row'}}>
-                      <TouchableOpacity onPress={this.onClick}>
-                        <Text style={{paddingTop: 5}}>Forgot password</Text>
-                      </TouchableOpacity>
+                      <TouchableOpacity onPress={this.onClick} />
                       <TouchableOpacity
                         onPress={() =>
                           this.props.navigation.navigate('Register')
@@ -192,7 +190,7 @@ class Login extends Component {
                             marginLeft: 10,
                             paddingTop: 5,
                           }}>
-                          Register
+                          Đăng ký
                         </Text>
                       </TouchableOpacity>
                     </View>

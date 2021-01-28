@@ -13,6 +13,8 @@ import CustomIcon from '../../../Utils/CustomIcon';
 import RNFetchBlob from 'rn-fetch-blob';
 import Toast from 'react-native-simple-toast';
 import AsyncStorage from '@react-native-community/async-storage';
+import Axios from 'axios';
+import {useSelector, connect} from 'react-redux';
 
 const deviceHeight = Dimensions.get('screen').height;
 const deviceWidth = Dimensions.get('screen').width;
@@ -37,6 +39,7 @@ class BookElement extends Component {
     super(props);
     this.state = {
       detailHeight: 0,
+      addedBook: false,
     };
   }
 
@@ -45,7 +48,23 @@ class BookElement extends Component {
     return true;
   }
 
-  checkDownloadStatus = () => {};
+  checkDownloadStatus = () => {
+    const {userId, navigation} = this.props;
+    Axios.get(URL.SERVER + ':5035/api/users/checkEnroll/' + userId)
+      .then((response) => {
+        const isEnrolled = response.data.user.enrolled;
+        console.log('response', response.data.user.enrolled);
+        if (isEnrolled === true) {
+          this.downloadBook();
+        } else {
+          Toast.show('bạn chưa nâng cấp tài khoản!');
+          navigation.navigate('Pricing');
+        }
+      })
+      .catch((error) => {
+        console.log('error', error);
+      });
+  };
 
   downloadBook = () => {
     let dirs = RNFetchBlob.fs.dirs;
@@ -93,8 +112,17 @@ class BookElement extends Component {
       });
   };
 
+  addToLibrary = (bookId, userId) => {
+    Axios.post(URL.SERVER + ':5035/books/addBookToUser', {
+      bookId,
+      userId,
+    }).then((res) => {
+      this.setState({addedBook: true});
+    });
+  };
+
   render() {
-    const {bookName, bookImage, bookId} = this.props;
+    const {bookName, bookImage, bookId, userId} = this.props;
     const {detailHeight} = this.state;
     return (
       <View>
@@ -150,7 +178,7 @@ class BookElement extends Component {
               />
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.downloadBook()}
+              onPress={() => this.checkDownloadStatus()}
               style={{paddingHorizontal: 20, borderRightWidth: 1}}>
               <CustomIcon
                 iconType="FontAwesome"
@@ -159,6 +187,27 @@ class BookElement extends Component {
                 color="#5d5d5d"
               />
             </TouchableOpacity>
+            {this.state.addedBook ? (
+              <View style={{paddingHorizontal: 20, borderRightWidth: 1}}>
+                <CustomIcon
+                  iconType="AntDesign"
+                  name="check"
+                  size={25}
+                  color="green"
+                />
+              </View>
+            ) : (
+              <TouchableOpacity
+                onPress={() => this.addToLibrary(bookId, userId)}
+                style={{paddingHorizontal: 20, borderRightWidth: 1}}>
+                <CustomIcon
+                  iconType="Entypo"
+                  name="add-to-list"
+                  size={25}
+                  color="#5d5d5d"
+                />
+              </TouchableOpacity>
+            )}
           </View>
           <View>
             <TouchableOpacity
@@ -173,4 +222,10 @@ class BookElement extends Component {
   }
 }
 
-export default BookElement;
+function mapStateToProps(state) {
+  return {
+    userId: state.user.user._id,
+  };
+}
+
+export default connect(mapStateToProps)(BookElement);

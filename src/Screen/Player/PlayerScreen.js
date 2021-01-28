@@ -49,71 +49,59 @@ const PlayerScreen = ({navigation}) => {
         flex: 1,
         borderRadius: 10,
         backgroundColor: 'grey',
-        padding: 20,
-        width: '100%',
       }}>
-      {/* <View
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          height: deviceHeight,
-          backgroundColor: 'grey',
-          width: '100%',
-          padding: 20,
-        }}> */}
-      <View
-        style={{
-          height: (deviceHeight * 5) / 100,
-          width: '100%',
-          backgroundColor: 'grey',
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <TouchableOpacity
-          style={{position: 'absolute', left: 0}}
-          onPress={() => navigation.goBack()}>
-          <CustomIcon
-            iconType="AntDesign"
-            name="down"
-            size={17}
-            color="#ffffff"
-          />
-        </TouchableOpacity>
-        <Text style={{color: 'white'}}> Playlist Name</Text>
-      </View>
-      <View
-        style={{
-          height: (deviceHeight * 50) / 100,
-          width: '100%',
-          marginBottom: (deviceHeight * 2) / 100,
-        }}>
-        <Image
+      <View style={{flex: 1, padding: 20}}>
+        <View
           style={{
-            height: '100%',
+            height: (deviceHeight * 5) / 100,
             width: '100%',
-            resizeMode: 'contain',
-          }}
-          source={{uri: track.artwork}}
-        />
-      </View>
-      <View style={{flexDirection: 'column', justifyContent: 'center'}}>
-        <Text style={{fontSize: 30, fontWeight: '500', color: 'white'}}>
-          {track.title}
-        </Text>
-        <Text style={{fontSize: 15, fontWeight: '400', color: 'white'}}>
-          {track.artist}
-        </Text>
-        {/* <Text style={{fontSize: 15, fontWeight: '400', color: 'white'}}>
-            {track.duration}
-          </Text> */}
-      </View>
-      <View
-        style={{
-          justifyContent: 'center',
-          height: (deviceHeight * 15) / 100,
-        }}>
-        <Player />
+            backgroundColor: 'grey',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <TouchableOpacity
+            style={{position: 'absolute', left: 0}}
+            onPress={() => navigation.goBack()}>
+            <CustomIcon
+              iconType="AntDesign"
+              name="down"
+              size={17}
+              color="#ffffff"
+            />
+          </TouchableOpacity>
+          <Text style={{color: 'white'}}> Playlist Name</Text>
+        </View>
+        <View
+          style={{
+            height: (deviceHeight * 50) / 100,
+            width: '100%',
+            marginBottom: (deviceHeight * 2) / 100,
+          }}>
+          <Image
+            style={{
+              height: '100%',
+              width: '100%',
+              resizeMode: 'contain',
+            }}
+            source={{uri: track.artwork}}
+          />
+        </View>
+        <View style={{flexDirection: 'column', justifyContent: 'center'}}>
+          <Text style={{fontSize: 30, fontWeight: '500', color: 'white'}}>
+            {track.title}
+          </Text>
+          <Text style={{fontSize: 15, fontWeight: '400', color: 'white'}}>
+            {track.artist}
+          </Text>
+        </View>
+        <View
+          style={{
+            justifyContent: 'center',
+            height: (deviceHeight * 15) / 100,
+          }}>
+          <Player />
+        </View>
       </View>
     </SafeAreaView>
   );

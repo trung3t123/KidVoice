@@ -11,6 +11,7 @@ import {getUserData} from './redux/actions/User';
 import {cardStyleInterpolatorRoot, gestureConfig} from './config';
 import BookPreview from './Screen/BookPreview/BookPreview';
 import PricingScreen from './Screen/Pricing/PricingScreen';
+import LanguageOptionScreen from './Screen/Account/Setting/LanguageOptionScreen';
 
 const Stack = createStackNavigator();
 
@@ -42,10 +43,18 @@ class Authorize extends Component {
           }}>
           <Stack.Screen name="Account" component={Account} />
           <Stack.Screen name="Player" component={PlayerScreen} />
-          <Stack.Screen name="BookPreview" component={BookPreview} />
+          <Stack.Screen
+            unmountOnBlur={true}
+            name="BookPreview"
+            component={BookPreview}
+          />
           <Stack.Screen name="Pricing" component={PricingScreen} />
           <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="Splash" component={Splash} />
+          <Stack.Screen
+            name="LanguageOptionScreen"
+            component={LanguageOptionScreen}
+          />
         </Stack.Navigator>
       );
     }

@@ -6,20 +6,20 @@ import IMAGE from '../../../Utils/ImageConst';
 
 const data = [
   {
-    title: 'non',
-    subTitle: 'khong co gi phai xoan ca, mang het moi thu ra day',
+    title: 'Download',
+    subTitle: 'Nghe mọi lúc mọi nơi',
   },
   {
-    title: 'Cau nay cha co gi',
-    subTitle: 'khong co gi phai xoan ca, mang het moi thu ra day',
+    title: 'Tốc độ cao',
+    subTitle: 'Trải nghiệm sách đọc tốc độ cao',
   },
   {
     title: 'Lap trinh that don gian',
-    subTitle: 'khong co gi phai xoan ca, mang het moi thu ra day',
+    subTitle: 'khong co gi ca, mang het moi thu ra day',
   },
   {
     title: 'Front end that ez',
-    subTitle: 'khong co gi phai xoan ca, mang het moi thu ra day',
+    subTitle: 'khong co gi ca, mang het moi thu ra day',
   },
 ];
 

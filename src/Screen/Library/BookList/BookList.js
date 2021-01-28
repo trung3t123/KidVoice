@@ -47,6 +47,7 @@ class BookList extends Component {
           toggleShowGrid={this.toggleShowGridHandler}
         />
         <ListBookList
+          userId={this.props.userId}
           setModalVisible={() => this.setModalVisible()}
           navigation={navigation}
           books={books}

@@ -108,14 +108,14 @@ const PricingScreen = ({navigation}) => {
       <ScrollView style={styles.modalBackground}>
         <Slider />
         <View style={styles.presentQuote}>
-          <Text>easyyyyyy</Text>
+          <Text>Đăng kí ngay để có thể tải thư viện của bạn</Text>
         </View>
         <PricingOptionsSession
           activeOption={activeOption}
           chooseOptionHandler={(index) => chooseOptionHandler(index)}
         />
         <Text style={{textAlign: 'center', marginVertical: 5, fontSize: 12}}>
-          Trial line for 7 days using without paying any thing
+          Đăng kí có thể hoàn tác trong 2 ngày
         </Text>
         <TouchableOpacity
           onPress={() => createOrderHandler()}
@@ -127,7 +127,7 @@ const PricingScreen = ({navigation}) => {
                 }
               : {backgroundColor: 'orange'},
           ]}>
-          <Text style={styles.continueButtonText}>Countinua</Text>
+          <Text style={styles.continueButtonText}>Tiếp tục</Text>
         </TouchableOpacity>
         <InstructionText />
       </ScrollView>

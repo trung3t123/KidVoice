@@ -16,11 +16,12 @@ class GridViewBooks extends Component {
 
   render() {
     const {item, navigation} = this.props;
+    console.log('item', item);
     return (
       <View style={styles.itemGridContainer}>
         <TouchableWithoutFeedback
           onPress={() =>
-            navigation.navigate('BookPreview', {bookId: item._id})
+            navigation.navigate('BookPreview', {bookId: item.item._id})
           }>
           <View style={styles.itemGridBackground}>
             <Image
@@ -28,14 +29,18 @@ class GridViewBooks extends Component {
               style={styles.imageStyle}
               source={{
                 uri:
-                  'https://images-na.ssl-images-amazon.com/images/I/817kywRJjVL.jpg',
+                  URL.SERVER +
+                  ':5035/tracks/getTrackImage/' +
+                  item.item.bookImage,
               }}
             />
           </View>
         </TouchableWithoutFeedback>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <TouchableWithoutFeedback
-            onPress={() => navigation.navigate('BookPreview')}>
+            onPress={() =>
+              navigation.navigate('BookPreview', {bookId: item.item._id})
+            }>
             <View style={{width: '80%', paddingBottom: 5}}>
               <Text
                 numberOfLines={2}
