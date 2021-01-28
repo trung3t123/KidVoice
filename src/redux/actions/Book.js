@@ -20,11 +20,14 @@ export const getUserBooks = (userId) => {
   };
 };
 
-export const loadBooksFromCache = () => {
-  return function (dispatch) {
-    return AsyncStorage.getItem('books').then((books) => {
-      console.log('books', books);
-    });
+export const addBookToUser = (bookId, userId) => {
+  return async function (dispatch) {
+    Axios.post(URL.SERVER + ':5035/books/addBookToUser', {bookId, userId}).then(
+      (response) => {
+        console.log('added', response);
+        dispatch(getUserBooks(userId));
+      },
+    );
   };
 };
 

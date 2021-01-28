@@ -4,6 +4,8 @@ import Filter from './Components/Filter';
 import ListBookList from './Components/ListBookList';
 import {connect} from 'react-redux';
 import {getUserBooks} from '../../../redux/actions/Book';
+import ModalAddBook from './Components/ModalAddBook';
+import Modal from 'react-native-modal';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,6 +19,7 @@ class BookList extends Component {
     super(props);
     this.state = {
       showGrid: false,
+      addBookVisible: false,
     };
   }
 
@@ -24,12 +27,17 @@ class BookList extends Component {
     this.props.getUserBooks(this.props.userId);
   };
 
+  setModalVisible = () => {
+    const {addBookVisible} = this.state;
+    this.setState({addBookVisible: !addBookVisible});
+  };
+
   toggleShowGridHandler = (isShowGrid) => {
     this.setState({showGrid: isShowGrid});
   };
 
   render() {
-    const {showGrid} = this.state;
+    const {showGrid, addBookVisible} = this.state;
     const {books, navigation} = this.props;
 
     return (
@@ -39,10 +47,17 @@ class BookList extends Component {
           toggleShowGrid={this.toggleShowGridHandler}
         />
         <ListBookList
+          setModalVisible={() => this.setModalVisible()}
           navigation={navigation}
           books={books}
           showGrid={showGrid}
         />
+        <Modal
+          isVisible={addBookVisible}
+          useNativeDriver={true}
+          animationInTiming={500}>
+          <ModalAddBook setModalVisible={() => this.setModalVisible()} />
+        </Modal>
       </View>
     );
   }

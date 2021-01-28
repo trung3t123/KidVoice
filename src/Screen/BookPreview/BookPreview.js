@@ -43,8 +43,15 @@ class BookPreview extends Component {
     this.state = {
       isHideHeader: false,
       page: '',
+      isDownloaded: false,
     };
   }
+
+  componentDidMount = () => {
+    const {route, navigation} = this.props;
+    const isDownloaded = route?.params?.isDownloaded;
+    this.setState({isDownloaded: isDownloaded});
+  };
 
   shouldComponentUpdate() {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -52,51 +59,85 @@ class BookPreview extends Component {
   }
 
   render() {
-    const {isHideHeader, page} = this.state;
+    const {isHideHeader, page, isDownloaded} = this.state;
     const {route, navigation} = this.props;
     const bookId = route?.params?.bookId;
-    const isDownloaded = route?.params?.isDownloaded;
-    console.log('isDonwloaded', isDownloaded);
     const path = route?.params?.path;
-    const source = {
-      uri:
-        isDownloaded === true
-          ? 'file://' + path
-          : URL.SERVER + ':5035/books/openBook/' + bookId,
+    const sourceDownloaded = {
+      uri: 'file://' + path,
       cache: false,
     };
-    return (
-      <View style={styles.screenContainer}>
-        <View style={styles.pagePreviewer}>
-          <Text style={{color: 'white'}}>{page}</Text>
-        </View>
-        {isHideHeader ? null : (
-          <Header
-            headerText={'Book Preview'}
-            navigation={this.props.navigation}
-          />
-        )}
+    const source = {
+      uri: URL.SERVER + ':5035/books/openBook/' + bookId,
+      cache: false,
+    };
+    if (isDownloaded === true) {
+      return (
+        <View style={styles.screenContainer}>
+          <View style={styles.pagePreviewer}>
+            <Text style={{color: 'white'}}>{page}</Text>
+          </View>
+          {isHideHeader ? null : (
+            <Header
+              headerText={'Book Preview'}
+              navigation={this.props.navigation}
+            />
+          )}
 
-        <Pdf
-          onPageSingleTap={() => this.setState({isHideHeader: !isHideHeader})}
-          source={source}
-          onLoadComplete={(numberOfPages, filePath) => {
-            console.log(`number of pages: ${numberOfPages}`);
-          }}
-          onPageChanged={(page, numberOfPages) => {
-            this.setState({page});
-          }}
-          onError={(error) => {
-            console.log(error);
-          }}
-          onPressLink={(uri) => {
-            console.log(`Link presse: ${uri}`);
-          }}
-          style={styles.pdf}
-        />
-        {/* <BookFooter /> */}
-      </View>
-    );
+          <Pdf
+            onPageSingleTap={() => this.setState({isHideHeader: !isHideHeader})}
+            source={sourceDownloaded}
+            onLoadComplete={(numberOfPages, filePath) => {
+              console.log(`number of pages: ${numberOfPages}`);
+            }}
+            onPageChanged={(page, numberOfPages) => {
+              this.setState({page});
+            }}
+            onError={(error) => {
+              console.log(error);
+            }}
+            onPressLink={(uri) => {
+              console.log(`Link presse: ${uri}`);
+            }}
+            style={styles.pdf}
+          />
+          {/* <BookFooter /> */}
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.screenContainer}>
+          <View style={styles.pagePreviewer}>
+            <Text style={{color: 'white'}}>{page}</Text>
+          </View>
+          {isHideHeader ? null : (
+            <Header
+              headerText={'Book Preview'}
+              navigation={this.props.navigation}
+            />
+          )}
+
+          <Pdf
+            onPageSingleTap={() => this.setState({isHideHeader: !isHideHeader})}
+            source={source}
+            onLoadComplete={(numberOfPages, filePath) => {
+              console.log(`number of pages: ${numberOfPages}`);
+            }}
+            onPageChanged={(page, numberOfPages) => {
+              this.setState({page});
+            }}
+            onError={(error) => {
+              console.log(error);
+            }}
+            onPressLink={(uri) => {
+              console.log(`Link presse: ${uri}`);
+            }}
+            style={styles.pdf}
+          />
+          {/* <BookFooter /> */}
+        </View>
+      );
+    }
   }
 }
 
