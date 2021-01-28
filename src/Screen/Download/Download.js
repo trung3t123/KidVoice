@@ -4,7 +4,6 @@ import {
   Text,
   Dimensions,
   Button,
-  AsyncStorage,
   FlatList,
   RefreshControl,
   StyleSheet,
@@ -15,6 +14,7 @@ import TrackPlayer from 'react-native-track-player';
 import TrackElement from './components/TrackElement';
 import Header from '../Components/Header/Header';
 import BookElement from './components/BookElement';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const deviceHeight = Dimensions.get('screen').height;
 const deviceWidth = Dimensions.get('window').width;

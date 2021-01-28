@@ -7,12 +7,12 @@ import {
   Image,
   LayoutAnimation,
   TouchableOpacity,
-  AsyncStorage,
 } from 'react-native';
 import URL from '../../../Utils/constant/ConstURL';
 import CustomIcon from '../../../Utils/CustomIcon';
 import RNFetchBlob from 'rn-fetch-blob';
 import Toast from 'react-native-simple-toast';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const deviceHeight = Dimensions.get('screen').height;
 const deviceWidth = Dimensions.get('screen').width;

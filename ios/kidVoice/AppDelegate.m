@@ -5,6 +5,7 @@
 #import <React/RCTRootView.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <CodePush/CodePush.h>
+#import <React/RCTLinkingManager.h>
 
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
@@ -55,10 +56,25 @@ static void InitializeFlipper(UIApplication *application) {
             openURL:(NSURL *)url
             options:(nonnull NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options
 {
-  [[FBSDKApplicationDelegate sharedInstance] application:application
-                                                 openURL:url
-                                                 options:options];
-  return YES;
+  
+  BOOL handleRCT;
+  if ([url.scheme caseInsensitiveCompare:@"org.reactjs.native.example.kidVoice.payments"] == NSOrderedSame) {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"getStatusOrder" object:url];
+    NSLog(@"yay %@", url);
+    handleRCT = YES;
+    [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                   openURL:url
+                                                   options:options];
+    
+  } else {
+    handleRCT = [RCTLinkingManager application:application openURL:url options:options];
+    NSLog(@"nah %@", url);
+    [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                   openURL:url
+                                                   options:options];
+  }
+  return handleRCT;
+  
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge

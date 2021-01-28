@@ -1,7 +1,6 @@
 import Axios from 'axios';
 import Toast from 'react-native-simple-toast';
 import URL from '../../Utils/constant/ConstURL';
-import {AsyncStorage} from 'react-native';
 
 export const getUserBooks = (userId) => {
   return function (dispatch) {

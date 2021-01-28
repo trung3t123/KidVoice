@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {View, Text, SafeAreaView, TouchableOpacity} from 'react-native';
+import {View, Text, SafeAreaView, TouchableOpacity, Button} from 'react-native';
 import {connect} from 'react-redux';
 import {logoutUser} from '../../redux/actions/User';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class Account extends Component {
   constructor(props) {
@@ -11,10 +12,16 @@ class Account extends Component {
 
   render() {
     return (
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, backgroundColor: 'white'}}>
+        <Button
+          title="clearCache"
+          onPress={async () => {
+            await AsyncStorage.clear();
+          }}
+        />
         <View>
           <Text>Upload Product</Text>
-          <View></View>
+          <View />
         </View>
         <Text> Logged in </Text>
         <TouchableOpacity
